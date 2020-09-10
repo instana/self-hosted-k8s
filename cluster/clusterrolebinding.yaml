@@ -1,0 +1,13 @@
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: instana-selfhosted-operator
+subjects:
+  - kind: ServiceAccount
+    name: instana-selfhosted-operator
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: instana-selfhosted-operator
+  apiGroup: rbac.authorization.k8s.io
