@@ -1,0 +1,7 @@
+namespace: unit-namespace
+
+resources:
+  - namespace.yaml
+  - secrets.yaml
+  - loadbalancer.yaml
+  - operator_instana_unit.yaml

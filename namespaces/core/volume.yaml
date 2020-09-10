@@ -1,0 +1,20 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: instana-span-volume
+  annotations:
+    pv.kubernetes.io/bound-by-controller: 'yes'
+  finalizers:
+    - kubernetes.io/pv-protection
+spec:
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /tmp
+    type: ''
+  accessModes:
+    - ReadWriteMany
+  claimRef:
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: high-io-storage
+  volumeMode: Filesystem

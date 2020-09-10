@@ -1,0 +1,128 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.3.0
+  creationTimestamp: null
+  name: units.instana.io
+spec:
+  group: instana.io
+  names:
+    kind: Unit
+    listKind: UnitList
+    plural: units
+    singular: unit
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      description: Unit is the Schema for the Instana units API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: UnitSpec for instana unit installation
+          properties:
+            coreName:
+              description: Name of the core
+              type: string
+            coreNamespace:
+              description: Namespace where the core components reside
+              type: string
+            initialAgentKey:
+              description: Initial Agent key
+              maxLength: 24
+              minLength: 20
+              type: string
+            logs:
+              description: Logs configuration
+              properties:
+                persistentVolume:
+                  description: PersistentVolume configuration
+                  properties:
+                    storageClass:
+                      description: StorageClass (high-io-storage)
+                      type: string
+                    volumeName:
+                      description: VolumeName for this mount
+                      type: string
+                  required:
+                  - storageClass
+                  - volumeName
+                  type: object
+              required:
+              - persistentVolume
+              type: object
+            profile:
+              description: Pods profile size to use for unit components, will default
+                to medium if omitted
+              enum:
+              - small
+              - medium
+              - large
+              - xlarge
+              - xxlarge
+              - xxxlarge
+              type: string
+            salesKey:
+              description: The Sales Key to be used
+              maxLength: 24
+              minLength: 20
+              type: string
+            tenantName:
+              description: Name of the tenant
+              pattern: ^[a-z][a-z0-9]*$
+              type: string
+            unitName:
+              description: Name of the tenant unit
+              pattern: ^[a-z][a-z0-9]*$
+              type: string
+          required:
+          - coreName
+          - coreNamespace
+          - initialAgentKey
+          - salesKey
+          - tenantName
+          - unitName
+          type: object
+        status:
+          description: UnitStatus defines the observed state of Unit
+          properties:
+            error:
+              description: last known error message, in case of error status
+              type: string
+            operatorStatus:
+              description: Current operator status
+              type: string
+            serviceAvailable:
+              description: Is the whole service currently available
+              type: boolean
+            version:
+              description: Current installed version of the unit components
+              type: string
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

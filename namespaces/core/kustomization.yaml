@@ -1,0 +1,20 @@
+namespace: unit-namespace
+
+secretGenerator:
+- name: app-tls
+  files:
+    - "secret/tls.cert"
+    - "secret/tls.key"
+  type: "kubernetes.io/tls"
+
+resources:
+  - cassandra-service.yaml
+  - clickhouse-service.yaml
+  - cockroachdb-service.yaml
+  - elasticsearch-service.yaml
+  - kafka-service.yaml
+  - zookeeper-service.yaml
+  - secrets.yaml
+  - loadbalancer.yaml
+  #- volume.yaml
+  - operator_instana_core.yaml

@@ -1,0 +1,3 @@
+resources:
+  - instana.io_cores.yaml
+  - instana.io_units.yaml

@@ -1,0 +1,384 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.3.0
+  creationTimestamp: null
+  name: cores.instana.io
+spec:
+  group: instana.io
+  names:
+    kind: Core
+    listKind: CoreList
+    plural: cores
+    singular: core
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      description: Core is the Schema for the Instana core API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: CoreSpec for instana core installation
+          properties:
+            baseDomain:
+              description: Base domain to use
+              type: string
+            databaseLocations:
+              description: All database locations
+              items:
+                description: Location of an individual database service
+                properties:
+                  cluster_nodes:
+                    description: Cluster must by set for clickhouse, to give a IP
+                      order for sharding
+                    items:
+                      type: string
+                    type: array
+                  is_cluster:
+                    type: boolean
+                  namespace:
+                    description: Namespace where the service is located
+                    type: string
+                  schemas:
+                    description: Schemas being available with this service
+                    items:
+                      type: string
+                    minItems: 1
+                    type: array
+                  serviceName:
+                    description: ServiceName for the db service
+                    type: string
+                  type:
+                    description: Type of the db
+                    enum:
+                    - cassandra
+                    - kafka
+                    - elasticsearch
+                    - cockroachdb
+                    - clickhouse
+                    - zookeeper
+                    type: string
+                required:
+                - namespace
+                - schemas
+                - serviceName
+                - type
+                type: object
+              minItems: 6
+              type: array
+            downloadKey:
+              description: Key to be used in order to download artifacts from Instana
+                repository
+              maxLength: 24
+              minLength: 20
+              type: string
+            email:
+              description: Email configuration
+              properties:
+                ses:
+                  description: SES configuration
+                  properties:
+                    accessID:
+                      description: Access secret
+                      type: string
+                    accessKey:
+                      description: Access key
+                      type: string
+                    from:
+                      description: from email address
+                      type: string
+                    region:
+                      description: AWS region to use
+                      type: string
+                    returnPath:
+                      description: Return path
+                      type: string
+                  required:
+                  - accessID
+                  - accessKey
+                  - from
+                  - region
+                  - returnPath
+                  type: object
+                smtp:
+                  description: SMTP configuration
+                  properties:
+                    from:
+                      description: from email address
+                      type: string
+                    host:
+                      description: host name of the mail server
+                      type: string
+                    password:
+                      description: mail server password
+                      type: string
+                    port:
+                      description: port of the mail server
+                      type: integer
+                    startTLS:
+                      description: shall we start TLS? No by default
+                      type: boolean
+                    useSSL:
+                      description: shall we use SSL? No by default
+                      type: boolean
+                    user:
+                      description: mail server user to use
+                      type: string
+                  required:
+                  - from
+                  - host
+                  - password
+                  - port
+                  - user
+                  type: object
+              type: object
+            feature:
+              description: Feature flag configurations
+              items:
+                description: Feature flag configuration
+                properties:
+                  enabled:
+                    description: Enabled sets the feature flag
+                    type: boolean
+                  key:
+                    description: Key of the feature flag
+                    type: string
+                required:
+                - enabled
+                - key
+                type: object
+              type: array
+            geoDbUrl:
+              description: Path to GeoLite2 db in S3 bucket
+              type: string
+            ingress:
+              description: Ingress configurations
+              items:
+                description: IngressConfiguration is configuration for all kinds of
+                  ingresses
+                properties:
+                  hostName:
+                    description: ingress host name
+                    type: string
+                  name:
+                    description: Ingress name
+                    type: string
+                  port:
+                    description: ingress port
+                    type: integer
+                required:
+                - name
+                - port
+                type: object
+              type: array
+            logLevel:
+              description: Components's default log level, will default to "INFO"
+                if omitted
+              enum:
+              - DEBUG
+              - INFO
+              - WARN
+              - ERROR
+              type: string
+            logs:
+              description: Logs configuration
+              properties:
+                persistentVolume:
+                  description: PersistentVolume configuration
+                  properties:
+                    storageClass:
+                      description: StorageClass (high-io-storage)
+                      type: string
+                    volumeName:
+                      description: VolumeName for this mount
+                      type: string
+                  required:
+                  - storageClass
+                  - volumeName
+                  type: object
+              required:
+              - persistentVolume
+              type: object
+            profile:
+              description: Pods profile size to use for core and global components
+              enum:
+              - small
+              - medium
+              - large
+              - xlarge
+              - xxlarge
+              type: string
+            proxy:
+              description: Proxy configuration
+              properties:
+                host:
+                  description: proxy host
+                  type: string
+                password:
+                  description: proxy password
+                  type: string
+                port:
+                  description: proxy port
+                  type: integer
+                user:
+                  description: proxy user
+                  type: string
+              required:
+              - host
+              - password
+              - port
+              - user
+              type: object
+            rawSpans:
+              description: RawSpans configuration
+              properties:
+                persistentVolume:
+                  description: PersistentVolume configuration
+                  properties:
+                    storageClass:
+                      description: StorageClass (high-io-storage)
+                      type: string
+                    volumeName:
+                      description: VolumeName for this mount
+                      type: string
+                  required:
+                  - storageClass
+                  - volumeName
+                  type: object
+                s3:
+                  description: S3 access configuration
+                  properties:
+                    accessKey:
+                      description: AccessKey key to access aws
+                      type: string
+                    bucket:
+                      description: Bucket
+                      type: string
+                    bucketLongTerm:
+                      description: BucketLongTerm
+                      type: string
+                    endpoint:
+                      description: Endpoint
+                      type: string
+                    prefix:
+                      description: Prefix
+                      type: string
+                    prefixLongTerm:
+                      description: PrefixLongTerm
+                      type: string
+                    region:
+                      description: Region
+                      type: string
+                    secretKey:
+                      description: SecretKey
+                      type: string
+                    storageClass:
+                      description: StorageClass
+                      type: string
+                    storageClassLongTerm:
+                      description: StorageClassLongTerm
+                      type: string
+                  required:
+                  - accessKey
+                  - bucket
+                  - bucketLongTerm
+                  - endpoint
+                  - prefix
+                  - prefixLongTerm
+                  - region
+                  - secretKey
+                  - storageClass
+                  - storageClassLongTerm
+                  type: object
+              type: object
+            registryURI:
+              description: Docker registry to use, will default to "containers.instana.io"
+                if omitted
+              type: string
+            saml:
+              description: SAML configuration
+              properties:
+                baseURL:
+                  description: base URL, will default "/auth" if omitted
+                  type: string
+                enable:
+                  description: Enable if SAML should be used
+                  type: boolean
+                maxAuthenticationLifetime:
+                  description: maximum authentication lifetime, will default to 604800
+                    if omitted
+                  type: integer
+                maxIDPMetadataSizeInBytes:
+                  description: maximum IDP metadata size, will default to 200000 if
+                    omitted
+                  type: integer
+              required:
+              - enable
+              type: object
+            toggle:
+              description: Configuration toggles configuration
+              items:
+                description: Toggle component configuration
+                properties:
+                  key:
+                    description: Key of the toggle
+                    type: string
+                  value:
+                    description: Value for this toggle
+                    type: string
+                required:
+                - key
+                - value
+                type: object
+              type: array
+          required:
+          - baseDomain
+          - databaseLocations
+          - downloadKey
+          - email
+          - rawSpans
+          type: object
+        status:
+          description: CoreStatus defines the observed state of Core
+          properties:
+            error:
+              description: last known error message, in case of error status
+              type: string
+            operatorStatus:
+              description: Current operator status
+              type: string
+            serviceAvailable:
+              description: Is the whole service currently available
+              type: boolean
+            version:
+              description: Current installed version of the core components
+              type: string
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

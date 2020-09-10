@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: enterprice-world
+  labels:
+    name: enterprice-world
