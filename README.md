@@ -1,3 +1,5 @@
 # The Operator
 
-Here we go
+# Things to come
+- High Availabilty for operator
+- Operator Lifecycle Manager
