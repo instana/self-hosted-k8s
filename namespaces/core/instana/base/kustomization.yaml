@@ -1,0 +1,10 @@
+namespace: unit-namespace
+
+namePrefix: test
+
+commonLabels:
+  app: instana
+  group: core
+
+resources:
+  - instana_core.yaml

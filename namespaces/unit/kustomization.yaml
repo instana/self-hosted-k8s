@@ -1,5 +1,11 @@
 namespace: unit-namespace
 
+#namePrefix: 
+
+commonLabels:
+  app: instana
+  group: unit
+
 resources:
   - namespace.yaml
   - secrets.yaml

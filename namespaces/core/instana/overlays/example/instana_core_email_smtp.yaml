@@ -1,0 +1,15 @@
+---
+apiVersion: instana.io/v1alpha1
+kind: Core
+metadata:
+  name: instana-core
+spec:
+  email:
+    smtp:
+      from:
+      host:
+      port: 465
+      user:
+      password:
+      useSSL: true
+      startTLS: false

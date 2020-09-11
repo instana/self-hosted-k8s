@@ -1,5 +1,11 @@
 namespace: unit-namespace
 
+#namePrefix: 
+
+commonLabels:
+  app: instana
+  group: core
+
 secretGenerator:
 - name: app-tls
   files:
@@ -17,4 +23,3 @@ resources:
   - secrets.yaml
   - loadbalancer.yaml
   #- volume.yaml
-  - operator_instana_core.yaml

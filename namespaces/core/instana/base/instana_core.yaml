@@ -1,0 +1,10 @@
+apiVersion: instana.io/v1alpha1
+kind: Core
+metadata:
+  name: instana-core
+spec:
+  registryURI: "containers.instana.io"
+  ingress:
+    - name: "agent-ingress"
+      hostName: "acceptor.instana.k8s"
+      port: 1444

@@ -1,44 +1,30 @@
-
----
 apiVersion: instana.io/v1alpha1
 kind: Core
 metadata:
   name: instana-core
 spec:
-  baseDomain: $(BASE_DOMAIN)
-  downloadKey: $(DOWNLOAD_KEY)
-  registryURI: "containers.instana.io"
-  profile: "small"
-  ingress:
-    - name: "agent-ingress"
-      hostName: "acceptor.instana.k8s"
-      port: 1444
-  rawSpans:
-    persistentVolume:
-      volumeName: "instana-span-volume"
-      storageClass: "high-io-storage"
   databaseLocations:
     - serviceName: "cassandra"
       namespace: "default"
       type: "cassandra"
-      schemas: [ "profiles","spans","metrics" ]
+      schemas: ["profiles", "spans", "metrics"]
     - serviceName: "elasticsearch"
       namespace: "default"
       type: "elasticsearch"
-      schemas: [ "metadata" ]
+      schemas: ["metadata"]
     - serviceName: "cockroachdb"
       namespace: "default"
       type: "cockroachdb"
-      schemas: [ "butlerdb","tenantdb","sales" ]
+      schemas: ["butlerdb", "tenantdb", "sales"]
     - serviceName: "clickhouse"
       type: "clickhouse"
       namespace: "default"
-      schemas: [ "clickhouse" ]
+      schemas: ["clickhouse"]
     - serviceName: "kafka"
       type: "kafka"
       namespace: "default"
-      schemas: [ "global-ingress","ingress" ]
+      schemas: ["global-ingress", "ingress"]
     - serviceName: "zookeeper"
       type: "zookeeper"
       namespace: "default"
-      schemas: [ "ingress","ingress-global" ]
+      schemas: ["ingress", "ingress-global"]

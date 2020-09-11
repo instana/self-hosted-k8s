@@ -1,0 +1,9 @@
+bases:
+  - ../../base
+
+patchesStrategicMerge:
+  - instana_core_datastores.yaml
+  #- instana_core_email_smtp.yaml
+  - instana_core_spans_pv.yaml
+  - instana_core_profile.yaml
+  - instana_core_base.yaml
