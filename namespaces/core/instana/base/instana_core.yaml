@@ -4,6 +4,7 @@ metadata:
   name: instana-core
 spec:
   registryURI: "containers.instana.io"
+  profile: "medium"
   ingress:
     - name: "agent-ingress"
       hostName: "acceptor.instana.k8s"

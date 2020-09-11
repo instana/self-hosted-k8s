@@ -1,17 +1,24 @@
 namespace: unit-namespace
 
-#namePrefix: 
-
 commonLabels:
   app: instana
   group: core
 
 secretGenerator:
-- name: app-tls
-  files:
-    - "secret/tls.cert"
-    - "secret/tls.key"
-  type: "kubernetes.io/tls"
+  - name: instana-secrets
+    files:
+      - "secret/tls.cert"
+      - "secret/tls.key"
+      - "secret/dhparams.pem"
+      - "secret/saml.pem"
+    literals:
+      - adminPassword=secretPWD
+      - saml.key.pass=passwort
+    type: "Opaque"
+  - name: instana-registry
+    files:
+      - "secret/.dockerconfigjson"
+    type: "kubernetes.io/dockerconfigjson"
 
 resources:
   - cassandra-service.yaml
@@ -20,6 +27,5 @@ resources:
   - elasticsearch-service.yaml
   - kafka-service.yaml
   - zookeeper-service.yaml
-  - secrets.yaml
   - loadbalancer.yaml
   #- volume.yaml

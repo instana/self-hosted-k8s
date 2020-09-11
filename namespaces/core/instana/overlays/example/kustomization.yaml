@@ -1,3 +1,7 @@
+namespace: unit-namespace
+
+namePrefix: test
+
 bases:
   - ../../base
 
