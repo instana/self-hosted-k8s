@@ -9,9 +9,6 @@ metadata:
 spec:
   storageClassName: "standard"
   capacity:
-    storage: 200G
+    storage: 100G
   accessModes:
     - ReadWriteMany
-  nfs:
-    path: /raw_spans
-    server:

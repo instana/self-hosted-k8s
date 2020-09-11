@@ -1,0 +1,12 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: instana-span-volume
+
+spec:
+  storageClassName: "standard"
+  capacity:
+    storage: 100G
+  nfs:
+    path: /raw_spans
+    server: $(NFS_HOST)

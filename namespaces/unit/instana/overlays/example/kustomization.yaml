@@ -1,6 +1,6 @@
 namespace: example-unit
 
-namePrefix: example
+nameSuffix: -example
 
 bases:
   - ../../base

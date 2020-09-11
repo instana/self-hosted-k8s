@@ -1,0 +1,10 @@
+generatorOptions:
+  disableNameSuffixHash: true
+
+commonLabels:
+  app: instana
+  group: unit
+
+resources:
+  - namespace.yaml
+  - loadbalancer.yaml

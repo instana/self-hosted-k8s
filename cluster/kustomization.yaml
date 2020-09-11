@@ -1,5 +1,5 @@
 resources:
-  - instana.io_cores.yaml
-  - instana.io_units.yaml
+  - crds/instana.io_cores.yaml
+  - crds/instana.io_units.yaml
   - clusterrole.yaml
   - clusterrolebinding.yaml

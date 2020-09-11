@@ -1,27 +1,26 @@
-namespace: unit-namespace
+bases:
+  - ../../base
 
-generatorOptions:
-  disableNameSuffixHash: true
-
-commonLabels:
-  app: instana
-  group: core
+namespace: core-namespace
 
 secretGenerator:
   - name: instana-secrets
     files:
-      - "secret/tls.cert"
-      - "secret/tls.key"
-      - "secret/dhparams.pem"
-      - "secret/saml.pem"
+      - "./secret/tls.cert"
+      - "./secret/tls.key"
+      - "./secret/dhparams.pem"
+      - "./secret/saml.pem"
     literals:
       - adminPassword=secretPWD
       - saml.key.pass=passwort
     type: "Opaque"
   - name: instana-registry
     files:
-      - "../secret/.dockerconfigjson"
+      - "./secret/.dockerconfigjson"
     type: "kubernetes.io/dockerconfigjson"
+
+patchesStrategicMerge:
+  - volume-spans-nfs.yaml
 
 resources:
   - cassandra-service.yaml
@@ -30,5 +29,3 @@ resources:
   - elasticsearch-service.yaml
   - kafka-service.yaml
   - zookeeper-service.yaml
-  - loadbalancer.yaml
-  #- volume.yaml

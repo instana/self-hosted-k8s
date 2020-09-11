@@ -6,4 +6,4 @@ spec:
   rawSpans:
     persistentVolume:
       volumeName: "instana-span-volume"
-      storageClass: "high-io-storage"
+      storageClass: "standard"

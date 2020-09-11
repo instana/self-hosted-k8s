@@ -1,6 +1,6 @@
 namespace: example-core
 
-namePrefix: test
+nameSuffix: -example
 
 bases:
   - ../../base

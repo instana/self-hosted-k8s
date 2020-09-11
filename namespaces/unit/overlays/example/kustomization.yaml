@@ -1,0 +1,20 @@
+bases:
+  - ../../base
+
+namespace: unit-namespace
+
+secretGenerator:
+  - name: instana-secrets
+    files:
+      - "./secret/tls.cert"
+      - "./secret/tls.key"
+      - "./secret/dhparams.pem"
+      - "./secret/saml.pem"
+    literals:
+      - adminPassword=secretPWD
+      - saml.key.pass=passwort
+    type: "Opaque"
+  - name: instana-registry
+    files:
+      - "./secret/.dockerconfigjson"
+    type: "kubernetes.io/dockerconfigjson"

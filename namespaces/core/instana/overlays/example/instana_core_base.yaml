@@ -2,7 +2,7 @@
 apiVersion: instana.io/v1alpha1
 kind: Core
 metadata:
-  name: instana-core-example
+  name: instana-core
 spec:
   baseDomain:
   downloadKey:
