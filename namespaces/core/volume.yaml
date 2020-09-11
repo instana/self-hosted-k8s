@@ -2,7 +2,6 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: instana-span-volume
-  namespace: instana-core
   annotations:
     pv.kubernetes.io/bound-by-controller: "yes"
   finalizers:

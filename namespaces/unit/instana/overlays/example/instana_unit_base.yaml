@@ -1,0 +1,11 @@
+apiVersion: instana.io/v1alpha1
+kind: Unit
+metadata:
+  name: instana-unit-example
+spec:
+  coreNamespace: "default"
+  coreName: "instana-core-example"
+  tenantName:
+  unitName:
+  salesKey:
+  initialAgentKey:

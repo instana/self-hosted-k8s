@@ -1,0 +1,9 @@
+namespace: example-unit
+
+namePrefix: example
+
+bases:
+  - ../../base
+
+patchesStrategicMerge:
+  - instana_unit_base.yaml

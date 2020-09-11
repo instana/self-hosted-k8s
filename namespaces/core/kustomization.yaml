@@ -1,5 +1,8 @@
 namespace: unit-namespace
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 commonLabels:
   app: instana
   group: core
@@ -17,7 +20,7 @@ secretGenerator:
     type: "Opaque"
   - name: instana-registry
     files:
-      - "secret/.dockerconfigjson"
+      - "../secret/.dockerconfigjson"
     type: "kubernetes.io/dockerconfigjson"
 
 resources:
