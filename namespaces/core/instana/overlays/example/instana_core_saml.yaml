@@ -1,8 +1,5 @@
----
 apiVersion: instana.io/v1alpha1
 kind: Core
 metadata:
   name: instana-core
 spec:
-  baseDomain: $(BASE_DOMAIN)
-  downloadKey: $(DOWNLOAD_KEY)
