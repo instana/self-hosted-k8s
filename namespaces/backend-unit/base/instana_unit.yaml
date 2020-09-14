@@ -1,0 +1,6 @@
+apiVersion: instana.io/v1alpha1
+kind: Unit
+metadata:
+  name: instana-unit
+spec:
+  profile: "medium"

@@ -7,5 +7,4 @@ commonLabels:
 
 resources:
   - loadbalancer.yaml
-  - namespace.yaml
   - volume-spans.yaml

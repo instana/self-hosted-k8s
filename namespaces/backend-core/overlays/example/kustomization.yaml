@@ -1,9 +1,9 @@
+bases:
+  - ../../base
+
 namespace: example-core
 
 nameSuffix: -example
-
-bases:
-  - ../../base
 
 patchesStrategicMerge:
   - instana_core_datastores.yaml

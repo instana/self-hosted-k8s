@@ -6,5 +6,4 @@ commonLabels:
   group: unit
 
 resources:
-  - namespace.yaml
   - loadbalancer.yaml
