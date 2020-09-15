@@ -6,4 +6,4 @@ namespace: example-unit
 nameSuffix: -example
 
 patchesStrategicMerge:
-  - instana_unit_base.yaml
+  - base.yaml
