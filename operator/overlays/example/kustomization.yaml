@@ -1,3 +1,6 @@
+bases:
+  - ../../base
+
 generatorOptions:
   disableNameSuffixHash: true
 
@@ -8,8 +11,9 @@ secretGenerator:
     type: "kubernetes.io/dockerconfigjson"
 
 resources:
-  - clusterrole.yaml
-  - crds/instana.io_cores.yaml
-  - crds/instana.io_units.yaml
-  - clusterrolebinding.yaml
-  - operator.yaml
+  - cassandra-service.yaml
+  - clickhouse-service.yaml
+  - cockroachdb-service.yaml
+  - elasticsearch-service.yaml
+  - kafka-service.yaml
+  - zookeeper-service.yaml

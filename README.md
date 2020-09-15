@@ -16,9 +16,9 @@ a new group of customers.
 Our experiences with kubernetes made it pretty clear that a [k8s-operator](https://operatorframework.io/) would be the 
 way to go to handle a highly distributed system like Instana.
 
-## TL;DR
+## Getting started
 
-THIS SHOULD CONTAIN A QUICK LIST OF STEPS TO GET THE THING RUNNING
+
 
 ## Requirements
 To get started with the operator you will need:

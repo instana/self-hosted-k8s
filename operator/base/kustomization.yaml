@@ -1,0 +1,6 @@
+resources:
+  - clusterrole.yaml
+  - crds/instana.io_cores.yaml
+  - crds/instana.io_units.yaml
+  - clusterrolebinding.yaml
+  - operator.yaml
