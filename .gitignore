@@ -3,4 +3,5 @@
 !**/overlays/example
 
 # ignore all support bundle outputs
-support-bundle-*.tar.gz
+instana-debug
+instana-debug*.tar.gz

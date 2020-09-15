@@ -56,4 +56,4 @@ spec:
               when: "count() < 3"
               message: Cannot find enough a nodes with sufficient memory and CPU
           - pass:
-              message: Your have sufficient CPU and memory available.
+              message: You have sufficient CPU and memory available.
