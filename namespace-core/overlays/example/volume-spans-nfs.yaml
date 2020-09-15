@@ -2,7 +2,10 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: instana-span-volume
-
+  annotations:
+    pv.kubernetes.io/bound-by-controller: "yes"
+  finalizers:
+    - kubernetes.io/pv-protection
 spec:
   storageClassName: "standard"
   capacity:
@@ -10,3 +13,5 @@ spec:
   nfs:
     path: /raw_spans
     server: $(NFS_HOST)
+  accessModes:
+    - ReadWriteMany
