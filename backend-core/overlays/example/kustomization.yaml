@@ -1,6 +1,9 @@
 bases:
   - ../../base
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 namespace: example-core
 
 nameSuffix: -example

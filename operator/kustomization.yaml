@@ -1,3 +1,12 @@
+generatorOptions:
+  disableNameSuffixHash: true
+
+secretGenerator:
+  - name: instana-registry
+    files:
+      - "secret/.dockerconfigjson"
+    type: "kubernetes.io/dockerconfigjson"
+
 resources:
   - clusterrole.yaml
   - crds/instana.io_cores.yaml

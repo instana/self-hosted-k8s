@@ -1,6 +1,9 @@
 bases:
   - ../../base
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 namespace: core-namespace
 
 secretGenerator:
