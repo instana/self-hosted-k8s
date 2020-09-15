@@ -3,5 +3,48 @@ kind: SupportBundle
 metadata:
   name: instana-support-bundle
 spec:
-  collectors: []
+  collectors:
+    - clusterInfo: {}
+    - clusterResources: {}
+    - logs:
+        name: container/logs
+        selector:
+          - application=instana
+        namespace: markus-world
+    - exec:
+        name: container/build
+        selector:
+          - application=instana
+          - component!=ui-client
+        namespace: markus-world
+        command: ["curl"]
+        args: ["--silent","--retry-connrefused","127.0.0.1:8601/admin/build.json"]
+        timeout: 120s
+    - exec:
+        name: container/env
+        selector:
+          - application=instana
+          - component=ui-client
+        namespace: markus-world
+        command: ["curl"]
+        args: ["--silent","--retry-connrefused","127.0.0.1:8601/environment"]
+        timeout: 120s
+    - exec:
+        name: container/config
+        selector:
+          - application=instana
+          - component!=ui-client
+        namespace: markus-world
+        command: ["curl"]
+        args: ["--silent","--retry-connrefused","127.0.0.1:8601/admin/config.json"]
+        timeout: 120s
+    - exec:
+        name: container/config
+        selector:
+          - application=instana
+          - component=ui-client
+        namespace: markus-world
+        command: ["curl"]
+        args: ["--silent","--retry-connrefused","127.0.0.1:8601/config"]
+        timeout: 120s
   analyzers: []
