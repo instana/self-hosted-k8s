@@ -45,7 +45,7 @@ create_directories() {
 
 create_tar_gz() {
   echo "tar -czf instana-debug.tar.gz $out_folder"
-  ts="$(date +"%T")"
+  ts="$(date +"%F-%T%")"
   tar -czf instana-debug-$ts.tar.gz $out_folder
   rm -rf $out_folder
 }
