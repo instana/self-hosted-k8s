@@ -1,5 +1,28 @@
 # The Operator
 
+**This is the documentation for the instana-operator-preview.**
+
+There is already a purely [Docker](https://www.docker.com/) based [Self-Hosted Instana](https://www.instana.com/docs/self_hosted_instana).
+This version doesn't rely on additional cluster technology and only requires a, rather beefy, machine to run on. 
+
+This type of installation works for most of our customers and require the least amount of operations to keep running and 
+up to date.
+Some customers have to go way beyond these limits to monitor their infrastructure which requires a lot more scalability 
+on our side which a single box can only provide vertically and only to a limit.
+
+With our recent move to [kubernetes](https://kubernetes.io) and its broad acceptance in the IT-industry we finall had the
+chance to provide Self-Hosted-Instana to a new group of customers.
+
+Our experiences with kubernetes made it pretty clear that a [k8s-operator](https://operatorframework.io/) would be the 
+way to go to handle a highly distributed system like Instana.
+
+## Capabilites
+
+## Building blocks
+
+## Structure
+
+
 # Things to come
 - High Availabilty for operator
 - Operator Lifecycle Manager
@@ -137,3 +160,4 @@ This one is responsible for API-calls and using the instana UI.
 Each tenant unit now requires a DNS entry of the form **<unit-name>-<tenant-name>.units.instana.mycompany.com**. 
 Each entry should have a **CNAME** pointing to **units.instana.mycompany.com**.
 
+# Debugging
