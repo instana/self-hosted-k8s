@@ -7,31 +7,32 @@ spec:
     - serviceName: "cassandra"
       namespace: "default"
       type: "cassandra"
-      is_cluster: true
+      isCluster: true
       schemas: ["profiles", "spans", "metrics"]
     - serviceName: "elasticsearch"
       namespace: "default"
       type: "elasticsearch"
-      is_cluster: true
+      isCluster: true
       schemas: ["metadata"]
     - serviceName: "cockroachdb"
       namespace: "default"
       type: "cockroachdb"
-      is_cluster: true
+      isCluster: true
       schemas: ["butlerdb", "tenantdb", "sales"]
     - serviceName: "clickhouse"
       type: "clickhouse"
-      is_cluster: true
+      isCluster: true
       namespace: "default"
       schemas: ["clickhouse"]
-      cluster_nodes: ["",""]
+      clusterName: "local"
+      clusterNodes: ["", ""]
     - serviceName: "kafka"
       type: "kafka"
-      is_cluster: true
+      isCluster: true
       namespace: "default"
       schemas: ["global-ingress", "ingress"]
     - serviceName: "zookeeper"
       type: "zookeeper"
-      is_cluster: true
+      isCluster: true
       namespace: "default"
       schemas: ["ingress", "ingress-global"]

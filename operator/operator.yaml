@@ -16,7 +16,7 @@ spec:
       containers:
         - name: instana-selfhosted-operator
           # Replace this with the built image name
-          image: containers.instana.io/instana/prerelease/selfhosted/operator:latest
+          image: containers.instana.io/instana/prerelease/selfhosted/operator:release-185
           args:
             - '--zap-level=1'
           imagePullPolicy: Always

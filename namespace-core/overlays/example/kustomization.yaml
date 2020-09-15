@@ -19,8 +19,6 @@ secretGenerator:
       - "./secret/.dockerconfigjson"
     type: "kubernetes.io/dockerconfigjson"
 
-patchesStrategicMerge:
-  - volume-spans-nfs.yaml
 
 resources:
   - cassandra-service.yaml
