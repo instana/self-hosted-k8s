@@ -105,13 +105,49 @@ butler/eum-acceptor/serverless-acceptor have an component called ingress (not a 
 component via a loadbalancer to be able to bind it to a static IP.
 
 ```yaml
-TODO ADD LOADBALANCER EXAMPLE
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-core
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: secure
+      port: 443
+      protocol: TCP
+      targetPort: 443
+    - name: plain
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    application: instana
+    component: ingress-core
+    group: service
+  sessionAffinity: None
+  type: LoadBalancer
 ```
 
 The acceptor does its own TLS-termination and traffic handling. It has therefore be to be exposed with a separate loadbalancer:
  
 ```yaml
-TODO ADD LOADBALANCER EXAMPLE
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-agent
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: service
+      port: 1444
+      protocol: TCP
+      targetPort: 8600
+  selector:
+    application: instana
+    component: acceptor
+    group: service
+  sessionAffinity: None
+  type: LoadBalancer
 ```
 
 ### tu-namespace
@@ -132,7 +168,27 @@ In the current iteration this should happen with a LoadBalancer to allow the bin
 chapter on [DNS](#dns))
 
 ```yaml
-TODO ADD LOADBALANCER EXAMPLE
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-unit
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: secure
+      port: 443
+      protocol: TCP
+      targetPort: 443
+    - name: plain
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    application: instana
+    component: ingress
+    group: service
+  sessionAffinity: None
+  type: LoadBalancer
 ```
 
 ## DNS
