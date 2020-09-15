@@ -137,3 +137,18 @@ This one is responsible for API-calls and using the instana UI.
 Each tenant unit now requires a DNS entry of the form **<unit-name>-<tenant-name>.units.instana.mycompany.com**. 
 Each entry should have a **CNAME** pointing to **units.instana.mycompany.com**.
 
+# troubleshoot
+
+* install [krew](https://krew.sigs.k8s.io/docs/user-guide/setup/install/)
+* install preflight via `kubectl krew install preflight`
+* install support-bundle via `kubectl krew install support-bundle`
+
+## preflight
+``` (bash)
+kubectl preflight troubleshoot/preflight.yaml
+```
+
+## support-bundle
+``` (bash)
+kubectl support-bundle troubleshoot/support-bundle.yaml
+```
