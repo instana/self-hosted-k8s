@@ -245,7 +245,7 @@ The facility used for this is called [finalizers](https://kubernetes.io/docs/tas
 ## Debugging
 
 ``` (bash)
-./ troubleshoot/instana-debug.sh
+./troubleshoot/instana-debug.sh
 ```
 
 ## FAQ
