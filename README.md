@@ -65,7 +65,7 @@ is not visible by any other unit.
 Above the TUs is the tenant, allowing further grouping. The tenant only appears as a logical construct and allows to define
 certain common properties for all its TUs (e.g. authentication, RBAC, ...).
 
-The operator supports the creation of an arbitrary number of TUs across an arbitrary number of namespaces. 
+The operator supports the creation of an arbitrary number of TUs across an arbitrary number of namespaces.
 
 ### Operator
 The operator itself is provided as a docker image __containers.instana.io/instana/erelease/selfhosted/operator:<version>__
@@ -126,7 +126,7 @@ spec:
 ```
 
 The acceptor does its own TLS-termination and traffic handling. It has therefore be to be exposed with a separate loadbalancer:
- 
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -156,12 +156,12 @@ There are two types of components being deployed in TU-namespace:
  They will be removed when their unit-CR-instance is removed
 - components that are only required once for all TUs running in a certain namespace:
  They will be removed only when the namespace or the associated core is being removed.
- 
+
 A tu-namespace contains a service called ingress (this is NOT a kubernetes-ingress) which coordinates all requests to
-the different TUs. 
+the different TUs.
 
 It is this service that has to be made available outside the cluster.
-In the current iteration this should happen with a LoadBalancer to allow the binding of a static IP to a DNS-name (see 
+In the current iteration this should happen with a LoadBalancer to allow the binding of a static IP to a DNS-name (see
 chapter on [DNS](#dns))
 
 ```yaml
@@ -212,7 +212,7 @@ This one is responsible for enabling logging into the system and receiving serve
 The **unit-ingress** will accessible under **units.instana.mycompany.com** with the A record pointing to the IP of the LoadBalancer defined above.
 This one is responsible for API-calls and using the Instana UI.
 
-Each tenant unit now requires a DNS entry of the form **<unit-name>-<tenant-name>.units.instana.mycompany.com**. 
+Each tenant unit now requires a DNS entry of the form **<unit-name>-<tenant-name>.units.instana.mycompany.com**.
 Each entry should have a **CNAME** pointing to **units.instana.mycompany.com**.
 
 ## Lifecycle
@@ -244,6 +244,9 @@ The facility used for this is called [finalizers](https://kubernetes.io/docs/tas
 
 ## Debugging
 
+``` (bash)
+./troubleshoot/instana-debug.sh
+```
 
 ## FAQ
 

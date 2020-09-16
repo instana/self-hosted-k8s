@@ -1,1 +1,7 @@
-**/stan/
+# ignore everything in overlays except the example folder
+**/overlays/*
+!**/overlays/example
+
+# ignore all support bundle outputs
+instana-debug
+instana-debug*.tar.gz
