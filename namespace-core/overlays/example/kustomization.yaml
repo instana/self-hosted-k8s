@@ -5,7 +5,7 @@ generatorOptions:
   disableNameSuffixHash: true
 
 namespace: core-namespace
-
+      
 secretGenerator:
   - name: instana-secrets
     files:

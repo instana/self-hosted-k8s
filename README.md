@@ -17,12 +17,39 @@ Our experiences with kubernetes made it pretty clear that a [k8s-operator](https
 way to go to handle a highly distributed system like Instana.
 
 ## Getting started
+The following steps are necessary, to set up a complete instana operator setup. All necessary objects are defined and created as kubernetes kustomize templating. 
+In the respective sections are example of the configurations which can be used as templates for your own, for example `operator/overlays/example`.
+
+### Operator deplyoment
+First of all the operator with its custom resources should be created in the cluster. 
+* For this copy the folder `operator/overlays/example` 
+* open for edit `operator/overlays/myname/secrets/.dockerconfigjson` and put instana registry credentials into the corresponding fields. 
+* Now you can run `kubectl apply -t .` inside the folder 
+and afterwards the operator should be available in the cluster.
+
+### Namespace core
+Next up is the core namespace. The core should preferably be deployed in a separate namespace. A core can serve several units. 
+* The overlay directory should also be copied into a separate directory.
+* The core needs a number of files (/secrets) and values (kustomizeation.yaml) for the necessary secrets. 
+* Furthermore the databases can be defined and created as services. For this purpose, adjust the corresponding `*-service.yaml` files with the right values.
+* Now everything can be applied into the kubernetes cluster. `kubectl apply -t .`
+
+
+### Namespace unit
+A namespace cluster can contain several or a single unit installtions. The procedure is the same as in the core namespace.
+
+### Backend core
+Now it is the time for the backends, first there must be a running core. Under `/backend-core/overlays/example` there are also templates for the core configuration. Now fill the necessary custom resource templates with values and list them in the `kustomization.yaml` as patch files.
+
+### Backend unit
+As in the core, all necessary values should be entered in the custom templates.
+
+
 
 
 
 ## Requirements
 To get started with the operator you will need:
-
 - a working kubernetes cluster 
 - databases to be set up
 
