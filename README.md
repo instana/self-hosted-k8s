@@ -24,8 +24,7 @@ way to go to handle a highly distributed system like Instana.
 To get started with the operator you will need:
 
 - a working kubernetes cluster 
-- databases to be set up according to our [instructions](https://github.com/instana/onprem-distkit) 
-- *VERY* solid kubernetes knowledge
+- databases to be set up
 
 ## Capabilites
 
@@ -36,12 +35,12 @@ and easy reproducability of problems ans various scenarios.
 ### Currently implemented
 This current preview deliver the following capabilities.
 
-- install instana into an existing k8s-cluster
-- take care of migrating and verifying databases required by instana
+- install Instana into an existing k8s-cluster
+- take care of migrating and verifying databases required by Instana
 - repair broken deployments and configs
 - update deployments and configs
 - manage an arbitrary number of tenants and tenant units
-- support multiple instana installations in the same cluster
+- support multiple Instana installations in the same cluster
 
 
 ## Building blocks
@@ -52,15 +51,14 @@ controlled by an operastor.
 In our case we created two CRDs for the different aspects of intstana in k8s.
 
 #### cores.instana.io
-A core represents all components shared by an instana installation. These components wil lreceive by far the biggest amount
-of load in regarts to ingress and processing.
-Each core has a set of associated databases which will be used by the core itself and all Tenants with their respective
-Tenant Units created as members of the core.
+A core represents all components shared by an instana installation. 
+Each core has a set of associated databases which will be used by the core itself and all tenants with their respective 
+tenant units created as members of the core.
 
-The operator supports multiple cores in the same Kubernetes-cluster.
+The operator supports multiple cores in the same kubernetes-cluster.
 
 #### units.instana.io
-Units represent individual data pools in instana. A unit could represent a department (sre/dev/qa/...), 
+Units represent individual data pools in Instana. A unit could represent a department (sre/dev/qa/...), 
 an area (development/staging/production/...) or any other logical grouping required by the customer. Data from one unit
 is not visible by any other unit.
 
@@ -70,7 +68,7 @@ certain common properties for all its TUs (e.g. authentication, RBAC, ...).
 The operator supports the creation of an arbitrary number of TUs across an arbitrary number of namespaces.
 
 ### Operator
-The operator itself is provided iin the form of a docker image __containers.instana.io/instana/erelease/selfhosted/operator:<version>__
+The operator itself is provided as a docker image __containers.instana.io/instana/erelease/selfhosted/operator:<version>__
 This image and all its versions are avilabale from our container registry [containers.instana.io](containers.instana.io).
 The actual implementation follows the operator pattern and is based on the [operator-sdk](https://operatorframework.io/).
 After installation into the cluster it will take care of all changes to the aforementioned CRDs and create/update/delete 
@@ -85,9 +83,8 @@ The following paragraphs will be based on this image.
 
 ### operator-namespace
 The operator should get its own namespace where it will create/delete various configmaps during its lifetime. Theses configmaps
-represent the persistent state of state machines used to interact with instana installations.
-At the time of writing this document the operator doesn't expose anything outside its namespace.
-All interactions happen indirectly via creating/updating/deleting the unit/core-CRs.
+represent the persistent state of state machines used to interact with Instana installations.
+The operator doesn't expose anything outside its namespace. All interactions happen indirectly via creating/updating/deleting the unit/core-CRs.
 
 ### core-namespace
 A core namespace contains all the shared components. 
@@ -97,7 +94,7 @@ The most important ones being:
 - acceptor: The acceptor is the main entry point for the instana-agent and receives raw TCP-traffic.
 - eum-acceptor: The End-User–Monitoring-acceptor receives HTTP traffic coming from the EUM-scripts injected into your webapps
 - serverless-acceptor: The serverless-acceptor receives HTTP traffic containing metrics/traces from your serverless applications
-- butler: This is the instana-IdP, handling all things security/athentication/authorization-related. It exposes the SignIn-pages via HTTP
+- butler: This is the Instana-IdP, handling all things security/athentication/authorization-related. It exposes the SignIn-pages via HTTP
 
 After a core has been created the components mentioned above have to be exported outside the cluster.
 
@@ -207,13 +204,13 @@ Let's summarize what we have to export from the paragraphs above:
 
 let's asume your domain is **instana.mycompany.com**:
 
-The **acceptor** will live under **acceptor.instana.mycompany.com** with the A record pointing to the IP of the LoadBalancer defined above.
+The **acceptor** will accessible under **acceptor.instana.mycompany.com** with the A record pointing to the IP of the LoadBalancer defined above.
 
-The **core-ingress** will live under **instana.mycompany.com** with the A record pointing to the IP of the LoadBalancer defined above.
+The **core-ingress** will accessible under **instana.mycompany.com** with the A record pointing to the IP of the LoadBalancer defined above.
 This one is responsible for enabling logging into the system and receiving serverless and eum-traffic.
 
-The **unit-ingress** will live under **units.instana.mycompany.com** with the A record pointing to the IP of the LoadBalancer defined above.
-This one is responsible for API-calls and using the instana UI.
+The **unit-ingress** will accessible under **units.instana.mycompany.com** with the A record pointing to the IP of the LoadBalancer defined above.
+This one is responsible for API-calls and using the Instana UI.
 
 Each tenant unit now requires a DNS entry of the form **<unit-name>-<tenant-name>.units.instana.mycompany.com**.
 Each entry should have a **CNAME** pointing to **units.instana.mycompany.com**.
@@ -271,4 +268,3 @@ registry. Make sure the secret 'instana-registry' exists in the namespace where 
 - Butler 
 
 SHOULD ONLY CONTAIN COMPONENTS RELEVANT FOR SETTING UP THE OPERATOR
-

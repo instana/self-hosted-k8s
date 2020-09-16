@@ -10,10 +10,3 @@ secretGenerator:
       - "secret/.dockerconfigjson"
     type: "kubernetes.io/dockerconfigjson"
 
-resources:
-  - cassandra-service.yaml
-  - clickhouse-service.yaml
-  - cockroachdb-service.yaml
-  - elasticsearch-service.yaml
-  - kafka-service.yaml
-  - zookeeper-service.yaml
