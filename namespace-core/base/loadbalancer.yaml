@@ -6,17 +6,13 @@ metadata:
 spec:
   externalTrafficPolicy: Cluster
   ports:
-    - name: secure
-      port: 443
+    - name: service
+      port: 1444
       protocol: TCP
-      targetPort: 443
-    - name: plain
-      port: 80
-      protocol: TCP
-      targetPort: 80
+      targetPort: 8600
   selector:
     application: instana
-    component: ingress
+    component: acceptor
     group: service
   sessionAffinity: None
   type: LoadBalancer
