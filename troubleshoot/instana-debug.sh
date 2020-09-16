@@ -18,6 +18,7 @@ for ns in $(kubectl get namespaces --all-namespaces $output_name_only); do
 done
 
 #### traps
+
 trap ctrl_c INT
 pid=-1
 
@@ -30,10 +31,11 @@ function ctrl_c() {
   fi
 }
 
-#### prepare
+#### file handling
 
 create_directories() {
   rm -rf $out_folder
+  mkdir $out_folder
 
   for i in "${!NAMESPACES[@]}"; do
     ns=${NAMESPACES[$i]}
@@ -45,26 +47,41 @@ create_directories() {
 
 create_tar_gz() {
   echo "tar -czf instana-debug.tar.gz $out_folder"
-  ts="$(date +"%F-%T%")"
+  ts="$(date +"%F-%T")"
   tar -czf instana-debug-$ts.tar.gz $out_folder
+  echo " - $(pwd)/instana-debug-$ts.tar.gz"
   rm -rf $out_folder
 }
 
 #### collect
 
-get_version() {
-  echo "get version"
+gather_common_info() {
+  echo "gather common information"
+
+  echo " - kubectl version"
   kubectl version --output=json &> $out_folder/kubernetes_version.json
-}
 
-get_endpoints() {
-  echo "get endpoints"
+  echo " - kubectl get customresourcedefinitions"
+  kubectl get customresourcedefinitions cores.instana.io --output=json &> $out_folder/cores.json
+  kubectl get customresourcedefinitions units.instana.io --output=json &> $out_folder/units.json
+
+  echo " - kubectl get nodes"
+  kubectl get nodes --output=wide &> $out_folder/nodes.txt
+
+  echo " - kubectl get endpoints"
   kubectl get endpoints --all-namespaces &> $out_folder/endpoints.txt
-}
 
-get_namespaces() {
-  echo "get namespaces"
+  echo " - kubectl get namespaces"
   kubectl get namespaces --all-namespaces &> $out_folder/namespaces.txt
+
+  echo " - kubectl get ingressses"
+  kubectl get ingressses --all-namespaces &> $out_folder/ingressses.txt
+
+  echo " - kubectl get storageclasses"
+  kubectl get storageclasses --all-namespaces &> $out_folder/storageclasses.txt
+
+  echo " - kubectl get secrets --field-selector type=kubernetes.io/dockerconfigjson"
+  kubectl get secrets --all-namespaces --field-selector type=kubernetes.io/dockerconfigjson &> $out_folder/dockerconfigjson.txt
 }
 
 gather_pods() {
@@ -135,18 +152,22 @@ gather_deployments_ns() {
 
 }
 
-echo "let's go ..."
+echo "running instana-debug ..."
+echo ""
 
+# prepare temp write data
 create_directories
 
-get_version
-get_endpoints
-get_namespaces
+# common needed info
+gather_common_info
 
+# detailed per namespace
 gather_pods
 gather_configmaps
 gather_deployments
 
+# build tar and clean
 create_tar_gz
 
-echo "done after $SECONDS sec."
+echo ""
+echo "instana-debug finished after $SECONDS sec."
