@@ -9,4 +9,4 @@ spec:
   ingress:
     - name: "agent-ingress"
       hostName: "$(BASE_URL)"
-      port: 1444
+      port: 443

@@ -142,7 +142,7 @@ spec:
   externalTrafficPolicy: Cluster
   ports:
     - name: service
-      port: 1444
+      port: 443
       protocol: TCP
       targetPort: 8600
   selector:
