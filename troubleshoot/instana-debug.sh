@@ -42,7 +42,7 @@ function ctrl_c() {
     echo " CTRL-C executed, terminating $pid"
     kill -9 $pid
   else
-    echo " CTRL-C executed"
+    echo " CTRL-C executed, ignoring ..."
   fi
 }
 
@@ -50,7 +50,7 @@ function ctrl_c() {
 
 create_directories() {
   rm -rf $out_folder
-  mkdir $out_folder
+  mkdir -p $out_folder/nodes
 
   for i in "${!NAMESPACES[@]}"; do
     ns=${NAMESPACES[$i]}
@@ -61,6 +61,7 @@ create_directories() {
 }
 
 create_tar_gz() {
+  echo ""
   echo "tar -czf instana-debug.tar.gz $out_folder"
   ts="$(date +"%F-%T")"
   tar -czf instana-debug-$ts.tar.gz $out_folder
@@ -80,8 +81,8 @@ gather_common_info() {
   kubectl get customresourcedefinitions cores.instana.io --output=json &> $out_folder/cores.json
   kubectl get customresourcedefinitions units.instana.io --output=json &> $out_folder/units.json
 
-  echo " - kubectl get nodes"
-  kubectl get nodes --output=wide &> $out_folder/nodes.txt
+  echo " - kubectl get services"
+  kubectl get services --all-namespaces &> $out_folder/services.txt
 
   echo " - kubectl get endpoints"
   kubectl get endpoints --all-namespaces &> $out_folder/endpoints.txt
@@ -97,6 +98,16 @@ gather_common_info() {
 
   echo " - kubectl get secrets --field-selector type=kubernetes.io/dockerconfigjson"
   kubectl get secrets --all-namespaces --field-selector type=kubernetes.io/dockerconfigjson &> $out_folder/dockerconfigjson.txt
+}
+
+gather_nodes() {
+  echo "gather node information"
+  kubectl get nodes --output=wide &> $out_folder/nodes/nodes.txt
+  for node in $(kubectl get nodes $output_name_only); do
+      echo " - kubectl get nodes $node"
+      kubectl get nodes $node -ojson &> $out_folder/configmaps/$namespace/$cm.json
+      kubectl describe nodes $node &> $out_folder/configmaps/$namespace/$cm.describe
+  done
 }
 
 gather_pods() {
@@ -120,6 +131,7 @@ gather_pods_ns() {
     pod=${PODS[$i]}
     echo " - kubectl get pods $pod -n $namespace"
     kubectl get pods $pod -n $namespace -ojson &> $out_folder/pods/$namespace/$pod.json
+    kubectl describe pods $pod -n $namespace &> $out_folder/pods/$namespace/$pod.describe
   done
 
   for i in "${!PODS[@]}"; do
@@ -162,8 +174,8 @@ gather_deployments_ns() {
   for dep in $(kubectl get deployments -n $namespace $selector_instana $output_name_only); do
       echo " - kubectl get deployments $dep -n $namespace"
       kubectl get deployments $dep -n $namespace -ojson &> $out_folder/deployments/$namespace/$dep.json
+      kubectl describe deployments $dep -n $namespace &> $out_folder/deployments/$namespace/$dep.describe
   done
-
 }
 
 echo "running instana-debug ..."
@@ -174,6 +186,9 @@ create_directories
 
 # common needed info
 gather_common_info
+
+# detailed no namespace
+gather_nodes
 
 # detailed per namespace
 gather_pods
