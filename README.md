@@ -24,7 +24,7 @@ In the respective sections are example of the configurations which can be used a
 First of all the operator with its custom resources should be created in the cluster. 
 * For this copy the folder `operator/overlays/example` 
 * open for edit `operator/overlays/myname/secrets/.dockerconfigjson` and put instana registry credentials into the corresponding fields. 
-* Now you can run `kubectl apply -t .` inside the folder 
+* Now you can run `kubectl apply -k .` inside the folder 
 and afterwards the operator should be available in the cluster.
 
 ### Namespace core
@@ -32,7 +32,7 @@ Next up is the core namespace. The core should preferably be deployed in a separ
 * The overlay directory should also be copied into a separate directory.
 * The core needs a number of files (/secrets) and values (kustomizeation.yaml) for the necessary secrets. 
 * Furthermore the databases can be defined and created as services. For this purpose, adjust the corresponding `*-service.yaml` files with the right values.
-* Now everything can be applied into the kubernetes cluster. `kubectl apply -t .`
+* Now everything can be applied into the kubernetes cluster. `kubectl apply -k .`
 
 
 ### Namespace unit
