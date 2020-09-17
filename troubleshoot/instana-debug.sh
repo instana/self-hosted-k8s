@@ -51,10 +51,13 @@ function ctrl_c() {
 create_directories() {
   rm -rf $out_folder
   mkdir -p $out_folder/nodes
+  mkdir -p $out_folder/crds
 
   for i in "${!NAMESPACES[@]}"; do
     ns=${NAMESPACES[$i]}
     mkdir -p $out_folder/pods/$ns
+    mkdir -p $out_folder/cores/$ns
+    mkdir -p $out_folder/units/$ns
     mkdir -p $out_folder/configmaps/$ns
     mkdir -p $out_folder/deployments/$ns
   done
@@ -78,8 +81,8 @@ gather_common_info() {
   kubectl version --output=json &> $out_folder/kubernetes_version.json
 
   echo " - kubectl get customresourcedefinitions"
-  kubectl get customresourcedefinitions cores.instana.io --output=json &> $out_folder/cores.json
-  kubectl get customresourcedefinitions units.instana.io --output=json &> $out_folder/units.json
+  kubectl get customresourcedefinitions cores.instana.io --output=json &> $out_folder/crds/cores.json
+  kubectl get customresourcedefinitions units.instana.io --output=json &> $out_folder/crds/units.json
 
   echo " - kubectl get services"
   kubectl get services --all-namespaces &> $out_folder/services.txt
@@ -115,6 +118,44 @@ gather_pods() {
   for i in "${!NAMESPACES[@]}"; do
     ns=${NAMESPACES[$i]}
     gather_pods_ns $ns
+  done
+}
+
+gather_cores() {
+  kubectl get cores --all-namespaces &> $out_folder/cores/cores.txt
+  for i in "${!NAMESPACES[@]}"; do
+    ns=${NAMESPACES[$i]}
+    gather_cores_ns $ns
+  done
+}
+
+gather_cores_ns() {
+  local namespace=$1
+  echo "gather cores for $namespace"
+
+  for core in $(kubectl get cores -n $namespace $output_name_only); do
+      echo " - kubectl get cores $core -n $namespace"
+      kubectl get cores $core -n $namespace -ojson &> $out_folder/cores/$namespace/$core.json
+      kubectl describe cores $core -n $namespace &> $out_folder/cores/$namespace/$core.describe
+  done
+}
+
+gather_units() {
+  kubectl get units --all-namespaces &> $out_folder/units/units.txt
+  for i in "${!NAMESPACES[@]}"; do
+    ns=${NAMESPACES[$i]}
+    gather_units_ns $ns
+  done
+}
+
+gather_units_ns() {
+  local namespace=$1
+  echo "gather units for $namespace"
+
+  for unit in $(kubectl get units -n $namespace $output_name_only); do
+      echo " - kubectl get units $core -n $namespace"
+      kubectl get units $core -n $namespace -ojson &> $out_folder/units/$namespace/$unit.json
+      kubectl describe units $core -n $namespace &> $out_folder/units/$namespace/$unit.describe
   done
 }
 
@@ -192,6 +233,8 @@ gather_nodes
 
 # detailed per namespace
 gather_pods
+gather_cores
+gather_units
 gather_configmaps
 gather_deployments
 
@@ -199,4 +242,4 @@ gather_deployments
 create_tar_gz
 
 echo ""
-echo "instana-debug finished after $SECONDS sec."
+echo "... instana-debug finished after $SECONDS sec."
