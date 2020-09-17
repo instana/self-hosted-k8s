@@ -6,3 +6,7 @@ metadata:
 spec:
   baseDomain: $(BASE_DOMAIN)
   downloadKey: $(DOWNLOAD_KEY)
+  ingress:
+    - name: "agent-ingress"
+      hostName: "$(BASE_URL)"
+      port: 1444
