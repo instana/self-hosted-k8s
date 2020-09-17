@@ -16,7 +16,7 @@ Our experiences with kubernetes made it pretty clear that a [k8s-operator](https
 The following steps are necessary, to set up a complete Instana operator setup. All necessary objects are defined and created as kubernetes kustomize templating.
 In the respective sections are example of the configurations which can be used as templates for your own, for example `operator/overlays/example`.
 
-### Operator deplyoment
+### Operator deployment
 First of all the operator with its custom resources should be created in the cluster.
 * For this copy the folder `operator/overlays/example`
 * open for edit `operator/overlays/myname/secrets/.dockerconfigjson` and put Instana registry credentials into the corresponding fields.
@@ -38,14 +38,12 @@ Now it is the time for the backends, first there must be a running core. Under `
 ### Backend unit
 As in the core, all necessary values should be entered in the custom templates.
 
-
 ## Requirements
 To get started with the operator you will need:
 - a working kubernetes cluster
 - databases to be set up
 
 ## Capabilites
-
 Our operator is built on the concept of persistent finite state machines. This allows us to manage the state of Instana in a persistent, resilient and reliable way. It also allows deep insights into what is currently going on in the cluster and easy reproducability of problems ans various scenarios.
 
 ### Currently implemented
