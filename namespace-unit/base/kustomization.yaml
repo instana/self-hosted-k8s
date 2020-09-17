@@ -2,7 +2,7 @@ generatorOptions:
   disableNameSuffixHash: true
 
 commonLabels:
-  app: instana
+  application: instana
   group: unit
 
 resources:
