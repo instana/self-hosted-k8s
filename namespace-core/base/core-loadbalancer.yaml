@@ -2,24 +2,6 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: loadbalancer-agent
-spec:
-  externalTrafficPolicy: Cluster
-  ports:
-    - name: service
-      port: 1444
-      protocol: TCP
-      targetPort: 8600
-  selector:
-    application: instana
-    component: acceptor
-    group: service
-  sessionAffinity: None
-  type: LoadBalancer
----
-apiVersion: v1
-kind: Service
-metadata:
   name: loadbalancer-core
 spec:
   externalTrafficPolicy: Cluster

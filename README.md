@@ -34,7 +34,6 @@ Next up is the core namespace. The core should preferably be deployed in a separ
 * Furthermore the databases can be defined and created as services. For this purpose, adjust the corresponding `*-service.yaml` files with the right values.
 * Now everything can be applied into the kubernetes cluster. `kubectl apply -k .`
 
-
 ### Namespace unit
 A namespace cluster can contain several or a single unit installtions. The procedure is the same as in the core namespace.
 
@@ -43,9 +42,6 @@ Now it is the time for the backends, first there must be a running core. Under `
 
 ### Backend unit
 As in the core, all necessary values should be entered in the custom templates.
-
-
-
 
 
 ## Requirements
@@ -68,7 +64,6 @@ This current preview deliver the following capabilities.
 - update deployments and configs
 - manage an arbitrary number of tenants and tenant units
 - support multiple Instana installations in the same cluster
-
 
 ## Building blocks
 

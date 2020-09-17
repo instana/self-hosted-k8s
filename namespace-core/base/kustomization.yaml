@@ -6,4 +6,5 @@ commonLabels:
   group: core
 
 resources:
-  - loadbalancer.yaml
+  - agent-loadbalancer.yaml
+  - core-loadbalancer.yaml

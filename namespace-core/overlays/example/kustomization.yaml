@@ -5,23 +5,27 @@ generatorOptions:
   disableNameSuffixHash: true
 
 namespace: core-namespace
-      
+
 secretGenerator:
   - name: instana-secrets
     files:
-      - "./secret/tls.crt"
-      - "./secret/tls.key"
-      - "./secret/dhparams.pem"
-      - "./secret/saml.pem"
+      - "secret/tls.crt"
+      - "secret/tls.key"
+      - "secret/dhparams.pem"
+      - "secret/saml.pem"
     literals:
       - adminPassword=secretPWD
       - saml.key.pass=passwort
     type: "Opaque"
   - name: instana-registry
     files:
-      - "./secret/.dockerconfigjson"
+      - "secret/.dockerconfigjson"
     type: "kubernetes.io/dockerconfigjson"
-    
+
+patchesStrategicMerge:
+  - agent-lb-ip.yaml
+  - core-lb-ip.yaml
+
 resources:
   - cassandra-service.yaml
   - clickhouse-service.yaml
