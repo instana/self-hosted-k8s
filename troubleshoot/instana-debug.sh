@@ -141,8 +141,7 @@ gather_configmaps_ns() {
   local namespace=$1
   echo "gather configmaps for $namespace"
 
-  #TODO $selector_instana
-  for cm in $(kubectl get configmaps -n $namespace $output_name_only); do
+  for cm in $(kubectl get configmaps -n $namespace $selector_instana $output_name_only); do
       echo " - kubectl get configmaps $cm -n $namespace"
       kubectl get configmaps $cm -n $namespace -ojson &> $out_folder/configmaps/$namespace/$cm.json
   done
