@@ -1,16 +1,31 @@
 #!/bin/bash
 
 #### usage
+
 usage() {
-  echo "usage: instana-debug --since=6h"
+  echo "usage: instana-debug [[-s since ] | [-h]]"
+  echo ""
+  echo "example: instana-debug --since=6h"
 }
 
 #### variables
-since=24h
 out_folder=instana-debug
 out_file=instana-debug
 selector_instana=-lapplication=instana
 output_name_only=--output=jsonpath={.items..metadata.name}
+since=6h
+
+while [ "$1" != "" ]; do
+  case $1 in
+    -s | --since )  shift
+                    since="$1"
+                    ;;
+    -h | --help )   usage
+                    exit
+                    ;;
+  esac
+  shift
+done
 
 NAMESPACES=()
 for ns in $(kubectl get namespaces --all-namespaces $output_name_only); do
