@@ -1,3 +1,7 @@
+commonLabels:
+  app: instana
+  group: operator
+
 resources:
   - clusterrole.yaml
   - crds/instana.io_cores.yaml
