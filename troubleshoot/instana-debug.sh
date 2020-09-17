@@ -105,8 +105,8 @@ gather_nodes() {
   kubectl get nodes --output=wide &> $out_folder/nodes/nodes.txt
   for node in $(kubectl get nodes $output_name_only); do
       echo " - kubectl get nodes $node"
-      kubectl get nodes $node -ojson &> $out_folder/configmaps/$namespace/$cm.json
-      kubectl describe nodes $node &> $out_folder/configmaps/$namespace/$cm.describe
+      kubectl get nodes $node -ojson &> $out_folder/nodes/$node.json
+      kubectl describe nodes $node &> $out_folder/nodes/$node.describe
   done
 }
 
