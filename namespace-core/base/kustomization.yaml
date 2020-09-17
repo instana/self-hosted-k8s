@@ -3,7 +3,6 @@ generatorOptions:
 
 commonLabels:
   application: instana
-  group: core
 
 resources:
   - agent-loadbalancer.yaml

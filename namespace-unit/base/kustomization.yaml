@@ -3,7 +3,6 @@ generatorOptions:
 
 commonLabels:
   application: instana
-  group: unit
 
 resources:
   - unit-loadbalancer.yaml

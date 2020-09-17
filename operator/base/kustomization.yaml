@@ -1,6 +1,5 @@
 commonLabels:
   application: instana
-  group: operator
 
 resources:
   - clusterrole.yaml

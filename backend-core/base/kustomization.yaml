@@ -1,6 +1,5 @@
 commonLabels:
   application: instana
-  group: core
 
 resources:
   - instana_core.yaml
