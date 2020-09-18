@@ -12,6 +12,5 @@ secretGenerator:
       - "secret/.dockerconfigjson"
     type: "kubernetes.io/dockerconfigjson"
 
-# applies all mandatory namespaces
 resources:
-  - namespaces.yaml
+  - namespace.yaml
