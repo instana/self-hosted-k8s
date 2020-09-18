@@ -7,5 +7,4 @@ spec:
   coreName: instana-core-example
   tenantName: $(TENANT_NAME)
   unitName: $(UNIT_NAME)
-  salesKey: $(SALES_KEY)
   initialAgentKey: $(AGENT_KEY)

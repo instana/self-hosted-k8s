@@ -1,3 +1,5 @@
+
+---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
@@ -42,13 +44,19 @@ spec:
               items:
                 description: Location of an individual database service
                 properties:
-                  cluster_nodes:
-                    description: Cluster must by set for clickhouse, to give a IP
-                      order for sharding
+                  clusterName:
+                    description: '[clickhouse] is used for db connection, will default
+                      to "local" if omitted'
+                    type: string
+                  clusterNodes:
+                    description: '[clickhouse] must be set if isCluster is used, to
+                      give a IP order for sharding'
                     items:
                       type: string
                     type: array
-                  is_cluster:
+                  isCluster:
+                    description: '[clickhouse] can be set to identify if clusterNodes
+                      must be used'
                     type: boolean
                   namespace:
                     description: Namespace where the service is located
@@ -214,7 +222,8 @@ spec:
               - persistentVolume
               type: object
             profile:
-              description: Pods profile size to use for core and global components
+              description: Pods profile size to use for core and global components,
+                will default to "medium" if omitted
               enum:
               - small
               - medium
@@ -309,6 +318,11 @@ spec:
               description: Docker registry to use, will default to "containers.instana.io"
                 if omitted
               type: string
+            salesKey:
+              description: The Sales Key to be used
+              maxLength: 24
+              minLength: 20
+              type: string
             saml:
               description: SAML configuration
               properties:
@@ -351,6 +365,7 @@ spec:
           - downloadKey
           - email
           - rawSpans
+          - salesKey
           type: object
         status:
           description: CoreStatus defines the observed state of Core
