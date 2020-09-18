@@ -3,8 +3,8 @@ kind: Unit
 metadata:
   name: instana-unit
 spec:
-  coreNamespace: core-namespace
-  coreName: instana-core-example
+  coreNamespace: namespace-core
+  coreName: instana-core-$coreNameSuffix
   tenantName: $(TENANT_NAME)
   unitName: $(UNIT_NAME)
   initialAgentKey: $(AGENT_KEY)

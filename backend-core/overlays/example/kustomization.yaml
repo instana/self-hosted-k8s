@@ -4,7 +4,7 @@ bases:
 generatorOptions:
   disableNameSuffixHash: true
 
-namespace: example-core
+namespace: instana-core
 
 nameSuffix: -example
 

@@ -4,9 +4,14 @@ bases:
 generatorOptions:
   disableNameSuffixHash: true
 
+namespace: namespace-operator
+
 secretGenerator:
   - name: instana-registry
     files:
       - "secret/.dockerconfigjson"
     type: "kubernetes.io/dockerconfigjson"
 
+# applies all mandatory namespaces
+resources:
+  - namespaces.yaml

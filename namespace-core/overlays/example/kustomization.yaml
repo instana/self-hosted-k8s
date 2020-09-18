@@ -4,7 +4,7 @@ bases:
 generatorOptions:
   disableNameSuffixHash: true
 
-namespace: core-namespace
+namespace: namespace-core
 
 secretGenerator:
   - name: instana-secrets
@@ -27,6 +27,7 @@ patchesStrategicMerge:
   - core-lb-ip.yaml
 
 resources:
+  - namespace.yaml
   - cassandra-service.yaml
   - clickhouse-service.yaml
   - cockroachdb-service.yaml
