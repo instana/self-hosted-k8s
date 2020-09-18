@@ -21,3 +21,6 @@ secretGenerator:
 
 patchesStrategicMerge:
   - unit-lb-ip.yaml
+
+resources:
+  - namespace.yaml
