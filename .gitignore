@@ -2,6 +2,9 @@
 **/overlays/*
 !**/overlays/example
 
-# ignore all support bundle outputs
+# ignore all troubleshoot outputs
 instana-debug
 instana-debug*.tar.gz
+
+# custom base level scripting
+/*.sh
