@@ -10,6 +10,7 @@ secretGenerator:
       - "./secret/tls.key"
       - "./secret/dhparams.pem"
       - "./secret/saml.pem"
+      - "./secret/license"
     literals:
       - adminPassword=secretPWD
       - saml.key.pass=passwort
