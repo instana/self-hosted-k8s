@@ -303,6 +303,19 @@ Deleting a core requires to get rid of all its units, which may live in differen
 
 The facility used for this is called [finalizers](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers).
 
+### Taints and tolerations
+We provide several default tolerations per pod with `PreferNoSchedule` effect.
+```
+Tolerations: application=instana:PreferNoSchedule
+             group=service:PreferNoSchedule
+             component=butler:PreferNoSchedule
+             componentgroup=core:PreferNoSchedule
+```
+and in addition for tenant unit components
+```
+             tenantunit=<tenant-unit>:PreferNoSchedule
+```
+
 ## Debugging
 
 ```bash
