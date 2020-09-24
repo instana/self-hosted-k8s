@@ -4,10 +4,6 @@ bases:
 generatorOptions:
   disableNameSuffixHash: true
 
-configMapGenerator:
-  - name: properties
-    env: config.properties
-
 secretGenerator:
   - name: instana-registry
     files:
@@ -16,3 +12,6 @@ secretGenerator:
 
 resources:
   - namespace.yaml
+
+configurations:
+ - instana-registry

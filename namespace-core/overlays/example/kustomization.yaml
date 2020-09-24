@@ -4,10 +4,6 @@ bases:
 generatorOptions:
   disableNameSuffixHash: true
 
-configMapGenerator:
-  - name: properties
-    env: config.properties
-
 namespace: namespace-core
 
 secretGenerator:

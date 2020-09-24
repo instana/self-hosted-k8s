@@ -1,11 +1,7 @@
 bases:
   - ../../base
 
-configMapGenerator:
-  - name: properties
-    env: config.properties
-
-namespace: unit-namespace
+namespace: namespace-unit
 
 secretGenerator:
   - name: instana-secrets
