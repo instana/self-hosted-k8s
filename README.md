@@ -21,6 +21,23 @@ To get started with the operator you will need:
 The following steps are necessary, to set up a complete Instana operator setup. All necessary objects are defined and created as kubernetes kustomize templating.
 In the respective sections are example of the configurations which can be used as templates for your own, for example `operator/overlays/example`.
 
+### Required values you need to know
+There are various placeholders in the overlays:
+- $(AGENT_INGRESS_IP) => 
+- $(AGENT_KEY) =>
+- $(BASE_DOMAIN) =>
+- $(BASE_URL) =>
+- $(CORE_INGRESS_IP) =>
+- $(DB_HOST) =>
+- $(DOWNLOAD_KEY) =>
+- $(NAMESPACE_CORE) =>
+- $(NAMESPACE_UNIT) =>
+- $(NFS_HOST) =>
+- $(SALES_KEY) =>
+- $(TENANT_NAME) =>
+- $(UNIT_INGRESS_IP) =>
+- $(UNIT_NAME) =>
+
 ### Operator deployment
 First of all the operator with its custom resources should be created in the cluster. We recommend having separate namespaces for the operator such as the core and the units.
 * For this copy the folder `operator/overlays/example`.
