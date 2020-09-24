@@ -6,6 +6,7 @@ spec:
   baseDomain: $(BASE_DOMAIN)
   salesKey: $(SALES_KEY)
   downloadKey: $(DOWNLOAD_KEY)
+  registryURI: "containers.instana.io"
   ingress:
     - name: "agent-ingress"
       hostName: "$(BASE_URL)"

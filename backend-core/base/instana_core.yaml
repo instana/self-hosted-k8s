@@ -3,6 +3,5 @@ kind: Core
 metadata:
   name: instana-core
 spec:
-  registryURI: "containers.instana.io"
   profile: "medium"
 

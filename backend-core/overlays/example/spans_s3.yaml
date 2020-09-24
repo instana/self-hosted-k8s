@@ -3,3 +3,15 @@ kind: Core
 metadata:
   name: instana-core
 spec:
+  rawSpans:
+    s3:
+      accessKey: ""
+      secretKey: ""
+      endpoint: ""
+      region: ""
+      bucket: ""
+      prefix: ""
+      storageClass: ""
+      bucketLongTerm: ""
+      prefixLongTerm: ""
+      storageClassLongTerm: ""
