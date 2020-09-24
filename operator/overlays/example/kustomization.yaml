@@ -15,5 +15,3 @@ resources:
 
 namespace: namespace-operator
 
-configurations:
- - instana-registry
