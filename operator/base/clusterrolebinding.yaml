@@ -5,7 +5,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: instana-selfhosted-operator
-    namespace: $(NAMESPACE_CORE)
+    namespace: namespace-operator
 roleRef:
   kind: ClusterRole
   name: instana-selfhosted-operator
