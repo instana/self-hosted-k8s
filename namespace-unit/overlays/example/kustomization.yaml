@@ -9,11 +9,9 @@ secretGenerator:
       - "./secret/tls.crt"
       - "./secret/tls.key"
       - "./secret/dhparams.pem"
-      - "./secret/saml.pem"
       - "./secret/license"
     literals:
       - adminPassword=secretPWD
-      - saml.key.pass=passwort
     type: "Opaque"
   - name: instana-registry
     files:

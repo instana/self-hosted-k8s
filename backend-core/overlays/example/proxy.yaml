@@ -3,5 +3,8 @@ kind: Core
 metadata:
   name: instana-core
 spec:
-  saml:
-    enable: true
+  proxy:
+    host:
+    port:
+    user:
+    password:

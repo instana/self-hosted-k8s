@@ -3,5 +3,4 @@ kind: Core
 metadata:
   name: instana-core
 spec:
-  saml:
-    enable: true
+  geoDbUrl: 

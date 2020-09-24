@@ -1,0 +1,12 @@
+apiVersion: instana.io/v1alpha1
+kind: Core
+metadata:
+  name: instana-core
+spec:
+  email:
+    ses:
+      from:
+      accessKey:
+      accessID:
+      returnPath:
+      region:
