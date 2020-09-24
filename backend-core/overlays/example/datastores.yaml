@@ -23,7 +23,7 @@ spec:
     - serviceName: "kafka"
       type: "kafka"
       namespace: "default"
-      schemas: ["ingress"]
+      schemas: ["global-ingress", "ingress"]
     - serviceName: "zookeeper"
       type: "zookeeper"
       namespace: "default"
