@@ -38,6 +38,15 @@ There are various placeholders in the overlays:
 - $(UNIT_INGRESS_IP) => IP under which UI and API will be reachabke
 - $(UNIT_NAME) => Nae of the tenant unit to be created
 
+### Data for the k8s secrets
+- A valid instana `license` file, which can be downloaded here. https://instana.io/onprem/license/download?salesId=${salesKey}
+- `tls.crt` and `tls.key` for the base domain
+- Pregenerated `dhparams.pem` for nginx
+- If saml should be configured the saml.pem file and the pass for the private key record
+- First admin pass
+- Instana AgentKey/DownloadKey for the registry access
+
+
 ### Operator deployment
 First of all the operator with its custom resources should be created in the cluster. We recommend having separate namespaces for the operator such as the core and the units.
 * For this copy the folder `operator/overlays/example`.
