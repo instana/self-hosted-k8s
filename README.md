@@ -23,20 +23,20 @@ In the respective sections are example of the configurations which can be used a
 
 ### Required values you need to know
 There are various placeholders in the overlays:
-- $(AGENT_INGRESS_IP) => 
-- $(AGENT_KEY) =>
-- $(BASE_DOMAIN) =>
-- $(BASE_URL) =>
-- $(CORE_INGRESS_IP) =>
-- $(DB_HOST) =>
-- $(DOWNLOAD_KEY) =>
-- $(NAMESPACE_CORE) =>
-- $(NAMESPACE_UNIT) =>
-- $(NFS_HOST) =>
-- $(SALES_KEY) =>
-- $(TENANT_NAME) =>
-- $(UNIT_INGRESS_IP) =>
-- $(UNIT_NAME) =>
+- $(AGENT_INGRESS_IP) => External IP-address for the loadbalancer to which the agents will connect
+- $(AGENT_KEY) => Key used by agents to connect to instana
+- $(BASE_DOMAIN) => Domain registered in the DNS used by the customer
+- $(BASE_URL) => Normally identical to BASE_DOMAIN
+- $(CORE_INGRESS_IP) => EUM and Serverless ingress endpoint
+- $(DB_HOST) => If using only a single database machine this has to point to it
+- $(DOWNLOAD_KEY) => Key used for downloading from instana 
+- $(NAMESPACE_CORE) => Name of the namespace where the CORE is running
+- $(NAMESPACE_UNIT) => Name of the namespace where the UNIT is running
+- $(NFS_HOST) => Host used as NFS-persistent-volume for raw spans 
+- $(SALES_KEY) => Customer sales key
+- $(TENANT_NAME) => Name of the tenant to be created
+- $(UNIT_INGRESS_IP) => IP under which UI and API will be reachabke
+- $(UNIT_NAME) => Nae of the tenant unit to be created
 
 ### Operator deployment
 First of all the operator with its custom resources should be created in the cluster. We recommend having separate namespaces for the operator such as the core and the units.
