@@ -3,4 +3,4 @@ kind: Service
 metadata:
   name: loadbalancer-unit
 spec:
-  loadBalancerIP: $(UNIT_IP)
+  loadBalancerIP: $(UNIT_INGRESS_IP)

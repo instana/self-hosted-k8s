@@ -1,6 +1,10 @@
 bases:
   - ../../base
 
+configMapGenerator:
+  - name: properties
+    env: config.properties
+
 generatorOptions:
   disableNameSuffixHash: true
 

@@ -3,4 +3,4 @@ kind: Service
 metadata:
   name: loadbalancer-core
 spec:
-  loadBalancerIP: $(CORE_IP)
+  loadBalancerIP: $(CORE_INGRESS_IP)
