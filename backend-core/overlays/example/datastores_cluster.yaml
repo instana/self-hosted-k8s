@@ -31,9 +31,9 @@ spec:
       type: "kafka"
       isCluster: true
       namespace: "default"
-      schemas: ["global-ingress", "ingress"]
+      schemas: ["ingress"]
     - serviceName: "zookeeper"
       type: "zookeeper"
       isCluster: true
       namespace: "default"
-      schemas: ["ingress", "ingress-global"]
+      schemas: ["ingress"]
