@@ -24,17 +24,27 @@ In the respective sections are example of the configurations which can be used a
 ### Operator deployment
 First of all the operator with its custom resources should be created in the cluster. We recommend having separate namespaces for the operator such as the core and the units.
 * For this copy the folder `operator/overlays/example`.
-* Open for edit `operator/overlays/<myname>/namespace.yaml` and insert your operator namespace name.
-* Open for edit `operator/overlays/<myname>/secrets/.dockerconfigjson` and put Instana registry credentials into the corresponding fields.
-* Now you can run `kubectl apply -k .` inside the folder and afterwards the operator should be available in the cluster.
+* Edit `operator/overlays/<myname>/namespace.yaml` and replace the `#OPERATOR-NAMESPACE`-placeholder with your operator namespace name.
+* Edit `operator/overlays/<myname>/secrets/.dockerconfigjson` and put Instana registry credentials into the corresponding fields.
+* Now run `kubectl apply -k .` inside the folder. 
+* The operator will show up in the designated namespace.
 
 ### Namespace core
-Next up is the core namespace. The core should preferably be deployed in a separate namespace. A core can serve several units.
-* The overlay directory should also be copied into a separate directory.
-* The core needs a number of files (/secrets) and values (kustomization.yaml) for the necessary secrets. The secret names instana-secrets and instana-registry are fix and can not be adjusted.
+Next up is the core namespace. The core should be deployed in a separate namespace. A core can serve several units.
+* For this copy the folder `namespace-core/overlays/example` into a separate directory e.g. `namespace-core/overlays/<myname>`.
+* The core needs a number of files (`namespace-core/overlays/<myname>/secrets`) and values (`namespace-core/overlays/<myname>/kustomization.yaml`) for the necessary secrets. The secret names *instana-secrets* and *instana-registry* are hardcoded and can not be adjusted.
 * For namespace creation adjust the corresponding `namespace.yaml`.
 * Furthermore the databases can be defined and created as services. For this purpose, adjust the corresponding `*-service.yaml` files with the right values.
 * Now everything can be applied into the kubernetes cluster with `kubectl apply -k .`.
+
+NOTE: This won't start any Pods, this is the configuration required for starting a core.
+
+### Backend core
+Now it is the time for the actual core to be deployed.
+* For this copy the folder `backend-core/overlays/example` into a separate directory e.g. `backend-core/overlays/<myname>`.
+* Edit `backend-core/overlays/<myname>/datastores.yaml` or `backend-core/overlays/<myname>/datastores_cluster.yaml` to correctly reflect the location of the services in the [core namespace](#namespace-core). 
+
+Afterwards everything can be applied into the kubernetes cluster with `kubectl apply -k .`.
 
 ### Namespace unit
 A unit namespace can contain several or a single unit installations.
@@ -42,10 +52,6 @@ A unit namespace can contain several or a single unit installations.
 * The unit needs a number of files (/secrets) and values (kustomization.yaml) for the necessary secrets. The secret names instana-secrets and instana-registry can not be adjusted.
 * For namespace creation adjust the corresponding `namespace.yaml`.
 * Now everything can be applied into the kubernetes cluster with `kubectl apply -k .`.
-
-### Backend core
-Now it is the time for the backends, first there must be a running core. Under `/backend-core/overlays/example` there are also templates for the core configuration. Now fill the necessary custom resource templates with values and list them in the `kustomization.yaml` as patch files. It is not possible to adjust the base name `instana-core` instead you can add a custom nameSuffix.
-Afterwards everything can be applied into the kubernetes cluster with `kubectl apply -k .`.
 
 ### Backend unit
 As in the core, all necessary values should be entered in the custom templates. It is not possible to adjust the base name `instana-unit` instead you can add a custom nameSuffix.
