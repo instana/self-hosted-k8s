@@ -13,5 +13,7 @@ secretGenerator:
 resources:
   - namespace.yaml
 
+namespace: namespace-operator
+
 configurations:
  - instana-registry

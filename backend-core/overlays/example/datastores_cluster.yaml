@@ -13,6 +13,7 @@ spec:
       namespace: "default"
       type: "elasticsearch"
       isCluster: true
+      clusterName: "onprem_onprem"
       schemas: ["metadata"]
     - serviceName: "cockroachdb"
       namespace: "default"

@@ -1,6 +1,8 @@
 generatorOptions:
   disableNameSuffixHash: true
 
+namespace: namespace-core
+
 commonLabels:
   application: instana
 
