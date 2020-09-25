@@ -3,6 +3,9 @@ bases:
 
 namespace: namespace-unit
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 secretGenerator:
   - name: instana-secrets
     files:
