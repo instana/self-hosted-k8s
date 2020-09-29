@@ -4,4 +4,3 @@ metadata:
   name: instana-core
 spec:
   profile: "medium"
-

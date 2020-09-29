@@ -24,22 +24,22 @@ In the respective sections are example of the configurations which can be used a
 ### Required values you need to know
 There are various placeholders in the overlays:
 - $(AGENT_INGRESS_IP) => External IP-address for the loadbalancer to which the agents will connect
-- $(AGENT_KEY) => Key used by agents to connect to instana
+- $(AGENT_KEY) => Key used by agents to connect to Instana
 - $(BASE_DOMAIN) => Domain registered in the DNS used by the customer
 - $(BASE_URL) => Might be identical to BASE_DOMAIN, endpoint for your agent ingress
 - $(CORE_INGRESS_IP) => EUM and Serverless ingress endpoint
 - $(DB_HOST) => If using only a single database machine this has to point to it
-- $(DOWNLOAD_KEY) => Key used for downloading from instana 
+- $(DOWNLOAD_KEY) => Key used for downloading from Instana
 - $(NAMESPACE_CORE) => Name of the namespace where the CORE is running
 - $(NAMESPACE_UNIT) => Name of the namespace where the UNIT is running
-- $(NFS_HOST) => Host used as NFS-persistent-volume for raw spans 
+- $(NFS_HOST) => Host used as NFS-persistent-volume for raw spans
 - $(SALES_KEY) => Customer sales key
 - $(TENANT_NAME) => Name of the tenant to be created
 - $(UNIT_INGRESS_IP) => IP under which UI and API will be reachable
 - $(UNIT_NAME) => Name of the tenant unit to be created
 
 ### Data for the k8s secrets
-- A valid instana `license` file, which can be downloaded here. https://instana.io/onprem/license/download?salesId=${salesKey}
+- A valid Instana `license` file, which can be downloaded here. https://instana.io/onprem/license/download?salesId=${salesKey}
 - `tls.crt` and `tls.key` for the base domain
 - Pregenerated `dhparams.pem` for nginx
 - If saml should be configured the `saml.pem` file and the pass for the private key record
@@ -49,41 +49,35 @@ There are various placeholders in the overlays:
 ### Operator deployment
 First of all the operator with its custom resources should be created in the cluster. We recommend having separate namespaces for the operator such as the core and the units.
 * For this copy the folder `operator/overlays/example`.
-* Edit `operator/overlays/<myname>/namespace.yaml` and replace the `#OPERATOR-NAMESPACE`-placeholder with your operator namespace name.
-* Edit `operator/overlays/<myname>/secrets/.dockerconfigjson` and put Instana registry credentials into the corresponding fields.
-* Now run `kubectl apply -k .` inside the folder. 
-* The operator will show up in the designated namespace.
+* Open for edit `operator/overlays/<myname>/namespace.yaml` and insert your operator namespace name.
+* Open for edit `operator/overlays/<myname>/secrets/.dockerconfigjson` and put Instana registry credentials into the corresponding fields.
+* Now you can run `kubectl apply -k .` inside the folder and afterwards the operator should be available in the cluster.
 
 ### Namespace core
-Next up is the core namespace. The core should be deployed in a separate namespace. A core can serve several units.
-* For this copy the folder `namespace-core/overlays/example` into a separate directory e.g. `namespace-core/overlays/<myname>`.
-* The core needs a number of files (`namespace-core/overlays/<myname>/secrets`) and values (`namespace-core/overlays/<myname>/kustomization.yaml`) for the necessary secrets. The secret names *instana-secrets* and *instana-registry* are hardcoded and can not be adjusted.
+Next up is the core namespace. The core should preferably be deployed in a separate namespace. A core can serve several units.
+* The overlay directory should also be copied into a separate directory.
+* The core needs a number of files (/secrets) and values (kustomization.yaml) for the necessary secrets. The secret names `instana-secrets` and `instana-registry` are fix and can not be adjusted.
 * For namespace creation adjust the corresponding `namespace.yaml`.
 * Furthermore the databases can be defined and created as services. For this purpose, adjust the corresponding `*-service.yaml` files with the right values.
 * Now everything can be applied into the kubernetes cluster with `kubectl apply -k .`.
 
-NOTE: This won't start any Pods, this is the configuration required for starting a core.
-
-### Backend core
-Now it is the time for the actual core to be deployed.
-* For this copy the folder `backend-core/overlays/example` into a separate directory e.g. `backend-core/overlays/<myname>`.
-* Edit `backend-core/overlays/<myname>/datastores.yaml` or `backend-core/overlays/<myname>/datastores_cluster.yaml` to correctly reflect the location of the services in the [core namespace](#namespace-core). 
-
-Afterwards everything can be applied into the kubernetes cluster with `kubectl apply -k .`.
-
 ### Namespace unit
 A unit namespace can contain several or a single unit installations.
 * The overlay directory should also be copied into a separate directory.
-* The unit needs a number of files (/secrets) and values (kustomization.yaml) for the necessary secrets. The secret names instana-secrets and instana-registry can not be adjusted.
+* The unit needs a number of files (/secrets) and values (kustomization.yaml) for the necessary secrets. The secret names `instana-secrets` and `instana-registry` can not be adjusted.
 * For namespace creation adjust the corresponding `namespace.yaml`.
 * Now everything can be applied into the kubernetes cluster with `kubectl apply -k .`.
 
+### Backend core
+Now it is the time for the backends, first there must be a running core. Under `/backend-core/overlays/example` there are also templates for the core configuration. Now fill the necessary custom resource templates with values and list them in the `kustomization.yaml` as patch files. It is not possible to adjust the base name `instana-core` instead you can add a custom nameSuffix.
+Afterwards everything can be applied into the kubernetes cluster with `kubectl apply -k .`.
+
 ### Backend unit
 As in the core, all necessary values should be entered in the custom templates. It is not possible to adjust the base name `instana-unit` instead you can add a custom nameSuffix.
-Afterwards everything can be applied into the kubernetes cluster with `kubectl apply -k .`. 
+Afterwards everything can be applied into the kubernetes cluster with `kubectl apply -k .`.
 
 ## Scaling
-An automated horizontal scaling of instana deployments is currently not supported. With manual scaling, higher load scenarios can be realized, but there are strict rules for this.
+An automated horizontal scaling of Instana deployments is currently not supported. With manual scaling, higher load scenarios can be realized, but there are strict rules for this.
 - There are components that cannot be scaled for design reasons. Scaling these components can lead to the entire system being unusable.
 - There are component groups which have to be scaled together to enlarge certain data piplines. Infra Metrics, Appdata (Spans), Eum (Beacon), Serverless
 - The scaling of certain components must be done in accordance with an appropriately scaled database backend.
@@ -93,12 +87,12 @@ Using kubectl, the respective deployments can be adapted as follows.
 `kubectl scale deployments/appdata-writer --replicas=2`
 `kubectl scale tu-${TENANT_NAME}-${UNIT_NAME}-appdata-processor --replicas=3`
 
-Vertical scaling is possible by using the profile size of the core and unit specs. This profile sizes can be used to determine fixed values for resource requirements, in order to setup smaller or larger units. 
+Vertical scaling is possible by using the profile size of the core and unit specs. This profile sizes can be used to determine fixed values for resource requirements, in order to setup smaller or larger units.
 
 
 ### Scaling appdata processing pipeline
-The following components are responsible for processing the Appdata pipeline. 
-In the core namespace the replicas of `appdata-writer` should reflect the number of Clickhouse nodes. 
+The following components are responsible for processing the Appdata pipeline.
+In the core namespace the replicas of `appdata-writer` should reflect the number of Clickhouse nodes.
 Furthermore, the size of the Spans-Cassandra cluster is the limiting factor here. As a rough guideline we can say that per Cassandra Node about 20000 Span/sec can be processed. A sufficient bandwidth must also be provided for the storage of the raw-traces.
 
 A high number of spans in a specific unit, can be compensated by increasing the `${TENANT_NAME}-${UNIT_NAME}-appdata-processor`.
@@ -161,7 +155,7 @@ A core namespace contains all the shared components.
 
 The most important ones being:
 
-- acceptor: The acceptor is the main entry point for the instana-agent and receives raw TCP-traffic.
+- acceptor: The acceptor is the main entry point for the Instana agent and receives raw TCP-traffic.
 - eum-acceptor: The End-User–Monitoring-acceptor receives HTTP traffic coming from the EUM-scripts injected into your webapps
 - serverless-acceptor: The serverless-acceptor receives HTTP traffic containing metrics/traces from your serverless applications
 - butler: This is the Instana-IdP, handling all things security/athentication/authorization-related. It exposes the SignIn-pages via HTTP
@@ -303,17 +297,42 @@ Deleting a core requires to get rid of all its units, which may live in differen
 
 The facility used for this is called [finalizers](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#finalizers).
 
-### Taints and tolerations
+#### Node affinity
+We provide a default `PreferredDuringSchedulingIgnoredDuringExecution` node affinity for the labels
+```
+Affinity: application=instana
+          component=<compoment>
+```
+
+In addition our components `filler`, `appdata-processor` and `appdata-writer` have an pod anti affinity with `RequiredDuringSchedulingIgnoredDuringExecution` against each other to avoid running on the same node.
+
+#### Taints and tolerations
 We provide several default tolerations per pod with `PreferNoSchedule` effect.
 ```
 Tolerations: application=instana:PreferNoSchedule
              group=service:PreferNoSchedule
-             component=butler:PreferNoSchedule
-             componentgroup=core:PreferNoSchedule
+             component=<compoment>:PreferNoSchedule
+             componentgroup=<group>:PreferNoSchedule
 ```
 and in addition for tenant unit components
 ```
              tenantunit=<tenant-unit>:PreferNoSchedule
+```
+
+#### Examples
+Therefore multiple combinations are possible, e.g.:
+* To avoid other applications on the Instana nodes
+```bash
+kubectl taint nodes <node> application=instana:PreferNoSchedule
+```
+* To run Instana on preferred nodes only
+```bash
+kubectl label nodes <node> application=instana
+```
+* To provide a node exclusively for the filler component
+```bash
+kubectl label nodes <node> component=filler
+kubectl taint nodes <node> component=filler:PreferNoSchedule
 ```
 
 ## Debugging

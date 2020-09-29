@@ -14,4 +14,3 @@ resources:
   - namespace.yaml
 
 namespace: namespace-operator
-
