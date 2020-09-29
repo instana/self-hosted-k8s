@@ -338,7 +338,7 @@ kubectl taint nodes <node> component=filler:PreferNoSchedule
 ## Debugging
 
 ```bash
-./troubleshoot/instana-debug.sh
+./troubleshoot/instana-debug.sh 
 ```
 
 ## FAQ
