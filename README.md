@@ -42,10 +42,9 @@ There are various placeholders in the overlays:
 - A valid instana `license` file, which can be downloaded here. https://instana.io/onprem/license/download?salesId=${salesKey}
 - `tls.crt` and `tls.key` for the base domain
 - Pregenerated `dhparams.pem` for nginx
-- If saml should be configured the saml.pem file and the pass for the private key record
+- If saml should be configured the `saml.pem` file and the pass for the private key record
 - First admin pass
 - Instana AgentKey/DownloadKey for the registry access
-
 
 ### Operator deployment
 First of all the operator with its custom resources should be created in the cluster. We recommend having separate namespaces for the operator such as the core and the units.
@@ -81,7 +80,33 @@ A unit namespace can contain several or a single unit installations.
 
 ### Backend unit
 As in the core, all necessary values should be entered in the custom templates. It is not possible to adjust the base name `instana-unit` instead you can add a custom nameSuffix.
-Afterwards everything can be applied into the kubernetes cluster with `kubectl apply -k .`.
+Afterwards everything can be applied into the kubernetes cluster with `kubectl apply -k .`. 
+
+## Scaling
+An automated horizontal scaling of instana deployments is currently not supported. With manual scaling, higher load scenarios can be realized, but there are strict rules for this.
+- There are components that cannot be scaled for design reasons. Scaling these components can lead to the entire system being unusable.
+- There are component groups which have to be scaled together to enlarge certain data piplines. Infra Metrics, Appdata (Spans), Eum (Beacon), Serverless
+- The scaling of certain components must be done in accordance with an appropriately scaled database backend.
+- The relationship between core and tenant unit components must also be in balance.
+
+Using kubectl, the respective deployments can be adapted as follows.
+`kubectl scale deployments/appdata-writer --replicas=2`
+`kubectl scale tu-${TENANT_NAME}-${UNIT_NAME}-appdata-processor --replicas=3`
+
+Vertical scaling is possible by using the profile size of the core and unit specs. This profile sizes can be used to determine fixed values for resource requirements, in order to setup smaller or larger units. 
+
+
+### Scaling appdata processing pipeline
+The following components are responsible for processing the Appdata pipeline. 
+In the core namespace the replicas of `appdata-writer` should reflect the number of Clickhouse nodes. 
+Furthermore, the size of the Spans-Cassandra cluster is the limiting factor here. As a rough guideline we can say that per Cassandra Node about 20000 Span/sec can be processed. A sufficient bandwidth must also be provided for the storage of the raw-traces.
+
+A high number of spans in a specific unit, can be compensated by increasing the `${TENANT_NAME}-${UNIT_NAME}-appdata-processor`.
+
+### Scaling metric processing pipeline
+
+
+### Scaling agent ingress
 
 ## Capabilites
 Our operator is built on the concept of persistent finite state machines. This allows us to manage the state of Instana in a persistent, resilient and reliable way. It also allows deep insights into what is currently going on in the cluster and easy reproducability of problems ans various scenarios.
