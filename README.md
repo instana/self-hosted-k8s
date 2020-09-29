@@ -26,7 +26,7 @@ There are various placeholders in the overlays:
 - $(AGENT_INGRESS_IP) => External IP-address for the loadbalancer to which the agents will connect
 - $(AGENT_KEY) => Key used by agents to connect to instana
 - $(BASE_DOMAIN) => Domain registered in the DNS used by the customer
-- $(BASE_URL) => Normally identical to BASE_DOMAIN
+- $(BASE_URL) => Might be identical to BASE_DOMAIN, endpoint for your agent ingress
 - $(CORE_INGRESS_IP) => EUM and Serverless ingress endpoint
 - $(DB_HOST) => If using only a single database machine this has to point to it
 - $(DOWNLOAD_KEY) => Key used for downloading from instana 
@@ -35,8 +35,8 @@ There are various placeholders in the overlays:
 - $(NFS_HOST) => Host used as NFS-persistent-volume for raw spans 
 - $(SALES_KEY) => Customer sales key
 - $(TENANT_NAME) => Name of the tenant to be created
-- $(UNIT_INGRESS_IP) => IP under which UI and API will be reachabke
-- $(UNIT_NAME) => Nae of the tenant unit to be created
+- $(UNIT_INGRESS_IP) => IP under which UI and API will be reachable
+- $(UNIT_NAME) => Name of the tenant unit to be created
 
 ### Data for the k8s secrets
 - A valid instana `license` file, which can be downloaded here. https://instana.io/onprem/license/download?salesId=${salesKey}
