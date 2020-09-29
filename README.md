@@ -335,10 +335,16 @@ kubectl label nodes <node> component=filler
 kubectl taint nodes <node> component=filler:PreferNoSchedule
 ```
 
+To remove a taint or a label from a node you can execute, e.g.:
+```bash
+kubectl label nodes <node> component-
+kubectl taint nodes <node> component:PreferNoSchedule-
+```
+
 ## Debugging
 
 ```bash
-./troubleshoot/instana-debug.sh 
+./troubleshoot/instana-debug.sh
 ```
 
 ## FAQ
