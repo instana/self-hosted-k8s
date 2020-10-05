@@ -47,8 +47,10 @@ rules:
       - ""
     resources:
       - pods
+      - nodes
     verbs:
       - get
+      - list
   - apiGroups:
       - apps
     resources:
