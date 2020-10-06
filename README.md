@@ -187,8 +187,10 @@ spec:
   sessionAffinity: None
   type: LoadBalancer
 ```
+#### Exposing Acceptor 
+The acceptor does its own TLS-termination and traffic handling. 
 
-The acceptor does its own TLS-termination and traffic handling. It has therefore be to be exposed with a separate loadbalancer:
+*Option 1: Expose with a separate loadbalancer*
 
 ```yaml
 apiVersion: v1
@@ -209,6 +211,68 @@ spec:
   sessionAffinity: None
   type: LoadBalancer
 ```
+
+*Option 2: Expose as NodePort*
+
+To expose the service as a NodePort use the following definiton:
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-acceptor-service
+  namespace: instana-core
+spec:
+  type: NodePort
+  selector:
+    application: instana
+    component: acceptor
+    componentgroup: core
+    group: service
+  ports:
+    - port: 8600
+      targetPort: 8600
+      nodePort: 30006
+      name: service
+```
+
+Since most external load balancers rely on health checks to verify the availabilty of a serivce you will also have to 
+expose the health port: 
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-acceptor-health
+  namespace: instana-core
+spec:
+  type: NodePort
+  selector:
+    application: instana
+    component: acceptor
+    componentgroup: core
+    group: service
+  ports:
+    - port: 8601
+      targetPort: 8601
+      nodePort: 30007
+      name: service
+```
+
+*Option 3: Expose as HostPort*
+ 
+Sometimes it is required to expose the accpetor via a higher port range than allowed via a NodePort.
+
+Under such circumstances a more invasive approach has to be taken to expose acceptor.
+
+A HostPort allows to expose a service directly to the network outside k8s. To allow this we introduced an environment variable
+called *ACCEPTOR_HOST_PORT*. This ENV has to be set for the operator pods. 
+If present the specified port will be used to publish acceptor directly to the host under the specified port.
+
+Additionally the health-endpoint will be reachable via *8601*, also as a host port.
+
+This bypasses the whole k8s-network-stack and we won't be able to check if the port is free on all nodes.   
+ 
+ Since most external load balancers rely on health checks to verify the availabilty of a serivce you will also have to 
+ expose the health port: 
 
 ### tu-namespace
 The operator supports multiple namespaces with an arbitrary number of TUs being deployed in each one.
