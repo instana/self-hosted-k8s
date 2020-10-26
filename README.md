@@ -400,7 +400,7 @@ The following service yaml can be used as templates, here replace `$(DB_HOST)` w
 
 As mentioned above there are multiple endpoints to be exposed to external IP-addresses. The following description should help to get a better understanding about how to map DNS-names to IPs.
 
-Please also note that we will also provide [ExternalDNS](https://github.com/kubernetes-sigs/external-dns) integration with one of the next releaases.
+Please also note that we will also provide [ExternalDNS](https://github.com/kubernetes-sigs/external-dns) integration with one of the next releases.
 
 ### The rundown
 
