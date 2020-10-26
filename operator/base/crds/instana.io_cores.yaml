@@ -1,3 +1,4 @@
+
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -45,7 +46,8 @@ spec:
                 properties:
                   clusterName:
                     description: '[clickhouse] is used for db connection, will default
-                      to "local" if omitted'
+                      to "local" if omitted. [elasticsearch] is used for db connection
+                      to "metadata" schema, will default to "onprem_onprem" if omitted'
                     type: string
                   clusterNodes:
                     description: '[clickhouse] must be set if isCluster is used, to
@@ -207,6 +209,12 @@ spec:
                 persistentVolume:
                   description: PersistentVolume configuration
                   properties:
+                    Limits:
+                      description: Limits for storage in Gi, default to 10 if omitted
+                      type: integer
+                    requests:
+                      description: Requests for storage in Gi, default to 2 if omitted
+                      type: integer
                     storageClass:
                       description: StorageClass (high-io-storage)
                       type: string
@@ -230,6 +238,56 @@ spec:
               - xlarge
               - xxlarge
               type: string
+            profileOverwrites:
+              description: ProfileOverwrites for custom resource assignments (requests
+                and limits for cpu and memory)
+              items:
+                description: ProfileOverwrite to adjust the standard profile per core
+                  component
+                properties:
+                  component:
+                    description: Component to overwrite
+                    enum:
+                    - butler
+                    - groundskeeper
+                    - accountant
+                    - cashier-ingest
+                    - cashier-rollup
+                    - acceptor
+                    - eum-acceptor
+                    - eum-processor
+                    - eum-health-processor
+                    - appdata-health-processor
+                    - sli-evaluator
+                    - js-stack-trace-translator
+                    - appdata-writer
+                    - appdata-reader
+                    - serverless-acceptor
+                    - ui-client
+                    - ingress
+                    type: string
+                  overwrite:
+                    description: Overwrite the specified values
+                    properties:
+                      cpuLimit:
+                        description: CpuLimit sets the limited (not limited via your
+                          profile)
+                        type: string
+                      cpuRequest:
+                        description: CpuRequest overwrites the requested cpu
+                        type: string
+                      memoryLimit:
+                        description: MemoryLimit overwrites the limited memory
+                        type: string
+                      memoryRequest:
+                        description: MemoryRequest overwrites the requested memory
+                        type: string
+                    type: object
+                required:
+                - component
+                - overwrite
+                type: object
+              type: array
             proxy:
               description: Proxy configuration
               properties:
@@ -257,6 +315,12 @@ spec:
                 persistentVolume:
                   description: PersistentVolume configuration
                   properties:
+                    Limits:
+                      description: Limits for storage in Gi, default to 10 if omitted
+                      type: integer
+                    requests:
+                      description: Requests for storage in Gi, default to 2 if omitted
+                      type: integer
                     storageClass:
                       description: StorageClass (high-io-storage)
                       type: string
@@ -327,6 +391,7 @@ spec:
               properties:
                 baseURL:
                   description: base URL, will default "/auth" if omitted
+                  pattern: ^\/*
                   type: string
                 enable:
                   description: Enable if SAML should be used

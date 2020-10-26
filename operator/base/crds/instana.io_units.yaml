@@ -1,3 +1,4 @@
+
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -52,6 +53,12 @@ spec:
                 persistentVolume:
                   description: PersistentVolume configuration
                   properties:
+                    Limits:
+                      description: Limits for storage in Gi, default to 10 if omitted
+                      type: integer
+                    requests:
+                      description: Requests for storage in Gi, default to 2 if omitted
+                      type: integer
                     storageClass:
                       description: StorageClass (high-io-storage)
                       type: string
@@ -76,12 +83,53 @@ spec:
               - xxlarge
               - xxxlarge
               type: string
+            profileOverwrites:
+              description: ProfileOverwrites for custom resource assignments (requests
+                and limits for cpu and memory)
+              items:
+                description: ProfileOverwrites to adjust the standard profile per
+                  unit component
+                properties:
+                  component:
+                    description: Component to overwrite
+                    enum:
+                    - filler
+                    - processor
+                    - issue-tracker
+                    - appdata-processor
+                    - appdata-legacy-converter
+                    - ui-backend
+                    type: string
+                  overwrite:
+                    description: Overwrite the specified values
+                    properties:
+                      cpuLimit:
+                        description: CpuLimit sets the limited (not limited via your
+                          profile)
+                        type: string
+                      cpuRequest:
+                        description: CpuRequest overwrites the requested cpu
+                        type: string
+                      memoryLimit:
+                        description: MemoryLimit overwrites the limited memory
+                        type: string
+                      memoryRequest:
+                        description: MemoryRequest overwrites the requested memory
+                        type: string
+                    type: object
+                required:
+                - component
+                - overwrite
+                type: object
+              type: array
             tenantName:
               description: Name of the tenant
+              maxLength: 15
               pattern: ^[a-z][a-z0-9]*$
               type: string
             unitName:
               description: Name of the tenant unit
+              maxLength: 13
               pattern: ^[a-z][a-z0-9]*$
               type: string
           required:
