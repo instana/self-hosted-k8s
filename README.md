@@ -342,7 +342,7 @@ spec:
   type: LoadBalancer
 ```
 
-## Install datbase host with instana-console
+## Install database host with instana-console
 
 For small to medium k8s installations we offer the possibility of setting up a database host using `instana-console`. With this method single node database instances are installed and started as docker images on the target host. These only need to be defined as k8s services and can then use as database layers for Instana.
 
