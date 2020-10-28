@@ -20,7 +20,7 @@ metadata:
   name: clickhouse
 subsets:
   - addresses:
-      - ip: $(DB_HOST)
+      - ip: ${DB_HOST}
     ports:
       - port: 8123
         name: "http"
