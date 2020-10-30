@@ -262,7 +262,7 @@ spec:
       name: service
 ```
 
-Since most external load balancers rely on health checks to verify the availabilty of a serivce you will also have to
+Since most external load balancers rely on health checks to verify the availabilty of a service you will also have to
 expose the health port:
 
 ```yaml
@@ -344,18 +344,18 @@ spec:
 
 ## Install database host with instana-console
 
-For small to medium k8s installations we offer the possibility of setting up a database host using `instana-console`. With this method single node database instances are installed and started as docker images on the target host. These only need to be defined as k8s services and can then use as database layers for Instana.
+For small to medium k8s installations we offer the possibility of setting up a database host using `instana-console`. With this method single node database instances are installed and started as docker images on the target host. These only need to be defined as k8s services and can then be used as database layers for Instana.
 
 ### Install instana-console
 
-First the latest `instana-console` must be install on the target host as explained [here](https://www.instana.com/docs/self_hosted_instana/installation).
+First the latest `instana-console` must be installed on the target host as explained [here](https://www.instana.com/docs/self_hosted_instana/installation).
 
 ### Configure settings.hcl
 
 The `settings.hcl` is the configuration file for the setup process.
 
 ```hcl
-type      = "single-db" //dual-db for external clickhouse installation
+type      = "single-db"
 host_name = "extern.resolvable.hostname"
 
 dir {
@@ -377,10 +377,10 @@ docker_repository {
 Initial setup of the host:
 `instana datastores init -f /path/to/settings.hcl`
 
-Stop all databases
+Stop all database containers
 `instana datastores stop`
 
-Start all databases
+Start all database containers
 `instana datastores start`
 
 Update images to the latest version of instana-console
@@ -407,7 +407,7 @@ Please also note that we will also provide [ExternalDNS](https://github.com/kube
 Let's summarize what we have to export from the paragraphs above:
 
 - acceptor from [core](#core-namespace)
-- ingress from [core](#core-namespace)
+- ingress-core from [core](#core-namespace)
 - ingress from [unit](#unit-namespace)
 
 let's asume your domain is **instana.mycompany.com**:
@@ -461,7 +461,7 @@ In addition our components `filler`, `appdata-processor` and `appdata-writer` ha
 
 #### Taints and tolerations
 
-We provide several default tolerations per pod with `PreferNoSchedule` effect.
+We provide several default tolerations per pod with `PreferNoSchedule`, `NoSchedule` and `NoExecute` effects.
 
 ```
 Tolerations: application=instana:PreferNoSchedule
@@ -526,7 +526,7 @@ kubectl patch core <name-of-core> --type "json" -p '[{"op":"remove","path":"/met
 
 - Tenant: A tenant is
 - Tenant Unit (TU): A tenant unit is
-- EUM
+- EUM: End User Monitoring
 
 ## Component Glossary
 

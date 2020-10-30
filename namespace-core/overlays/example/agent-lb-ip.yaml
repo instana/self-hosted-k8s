@@ -3,4 +3,5 @@ kind: Service
 metadata:
   name: loadbalancer-agent
 spec:
-  loadBalancerIP: "$(AGENT_INGRESS_IP)"
+  loadBalancerIP: ${AGENT_INGRESS_IP}
+

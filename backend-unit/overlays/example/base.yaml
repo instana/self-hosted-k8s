@@ -5,6 +5,6 @@ metadata:
 spec:
   coreNamespace: namespace-core
   coreName: instana-core-$coreNameSuffix
-  tenantName: $(TENANT_NAME)
-  unitName: $(UNIT_NAME)
-  initialAgentKey: $(AGENT_KEY)
+  tenantName: ${TENANT_NAME}
+  unitName: ${UNIT_NAME}
+  initialAgentKey: ${AGENT_KEY}
