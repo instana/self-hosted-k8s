@@ -8,6 +8,6 @@ spec:
     storage: 100G
   nfs:
     path: /raw_spans
-    server: $(NFS_HOST)
+    server: "$(NFS_HOST)"
   accessModes:
     - ReadWriteMany

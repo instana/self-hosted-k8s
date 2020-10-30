@@ -16,7 +16,7 @@ metadata:
   name: zookeeper
 subsets:
   - addresses:
-      - ip: $(DB_HOST)
+      - ip: "$(DB_HOST)"
     ports:
       - port: 2181
         name: "tcp"

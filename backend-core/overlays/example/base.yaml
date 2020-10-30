@@ -3,9 +3,9 @@ kind: Core
 metadata:
   name: instana-core
 spec:
-  baseDomain: $(BASE_DOMAIN)
-  salesKey: $(SALES_KEY)
-  downloadKey: $(DOWNLOAD_KEY)
+  baseDomain: "$(BASE_DOMAIN)"
+  salesKey: "$(SALES_KEY)"
+  downloadKey: "$(DOWNLOAD_KEY)"
   registryURI: "containers.instana.io"
   ingress:
     - name: "agent-ingress"

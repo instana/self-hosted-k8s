@@ -20,7 +20,7 @@ metadata:
   name: elasticsearch
 subsets:
   - addresses:
-      - ip: $(DB_HOST)
+      - ip: "$(DB_HOST)"
     ports:
       - port: 9300
         name: "tcp"
