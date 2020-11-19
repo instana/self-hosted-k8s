@@ -103,6 +103,10 @@ spec:
                   overwrite:
                     description: Overwrite the specified values
                     properties:
+                      automountServiceAccountToken:
+                        description: AutomountServiceAccountToken  overwrites the
+                          service account name for automountServiceAccountToken definition
+                        type: boolean
                       cpuLimit:
                         description: CpuLimit sets the limited (not limited via your
                           profile)
@@ -120,10 +124,6 @@ spec:
                         description: ServiceAccountName overwrites the service account
                           name for pod definition
                         type: string
-                      serviceAccountToken:
-                        description: ServiceAccountToken  overwrites the service account
-                          name for automountServiceAccountToken definition
-                        type: boolean
                     type: object
                 required:
                 - component
