@@ -1,0 +1,13 @@
+apiVersion: instana.io/v1alpha1
+kind: Core
+metadata:
+  name: instana-core
+spec:
+  profileOverwrites:
+    - component: "acceptor"
+      overwrite:
+        cpuLimit: "15"
+        memoryLimit: "32Gi"
+    - component: "appdata-writer"
+      overwrite:
+        serviceAccountName: "custom-service-account"
