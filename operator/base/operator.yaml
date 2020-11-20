@@ -17,7 +17,7 @@ spec:
       serviceAccountName: instana-selfhosted-operator
       containers:
         - name: instana-selfhosted-operator
-          image: containers.instana.io/instana/prerelease/selfhosted/operator:release-187
+          image: containers.instana.io/instana/release/selfhosted/operator:release-187-5
           args:
             - "--zap-level=3"
           imagePullPolicy: Always
