@@ -49,6 +49,7 @@ There are various placeholders in the overlays:
 - `tls.crt` and `tls.key` for the base domain
 - Pregenerated `dhparams.pem` for nginx
 - If saml should be configured the `saml.pem` file and the pass for the private key record
+- `token.secret` 12 characters long secret token to secure invitation links and some other internal data
 - First admin pass
 - Instana AgentKey/DownloadKey for the registry access
 
@@ -389,12 +390,12 @@ Update images to the latest version of instana-console
 ### Configure k8s services for instana operator
 
 The following service yaml can be used as templates, here replace `$(DB_HOST)` with the name of the db host.
-* [cassandra](https://github.com/instana/self-hosted-k8s/blob/release-187/namespace-core/overlays/example/cassandra-service.yaml)
-* [cockroachdb](https://github.com/instana/self-hosted-k8s/blob/release-187/namespace-core/overlays/example/cockroachdb-service.yaml)
-* [clickhouse](https://github.com/instana/self-hosted-k8s/blob/release-187/namespace-core/overlays/example/clickhouse-service.yaml)
-* [elasticsearch](https://github.com/instana/self-hosted-k8s/blob/release-187/namespace-core/overlays/example/elasticsearch-service.yaml)
-* [kafka](https://github.com/instana/self-hosted-k8s/blob/release-187/namespace-core/overlays/example/kafka-service.yaml)
 
+- [cassandra](https://github.com/instana/self-hosted-k8s/blob/release-187/namespace-core/overlays/example/cassandra-service.yaml)
+- [cockroachdb](https://github.com/instana/self-hosted-k8s/blob/release-187/namespace-core/overlays/example/cockroachdb-service.yaml)
+- [clickhouse](https://github.com/instana/self-hosted-k8s/blob/release-187/namespace-core/overlays/example/clickhouse-service.yaml)
+- [elasticsearch](https://github.com/instana/self-hosted-k8s/blob/release-187/namespace-core/overlays/example/elasticsearch-service.yaml)
+- [kafka](https://github.com/instana/self-hosted-k8s/blob/release-187/namespace-core/overlays/example/kafka-service.yaml)
 
 ## DNS
 

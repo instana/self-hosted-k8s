@@ -16,6 +16,7 @@ secretGenerator:
     literals:
       - adminPassword=secretPWD
       - saml.key.pass=passwort
+      - token.secret=123456789012
     type: "Opaque"
   - name: instana-registry
     files:
