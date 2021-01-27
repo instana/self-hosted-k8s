@@ -513,6 +513,32 @@ kubectl taint nodes <node> component:PreferNoSchedule-
 ./troubleshoot/instana-debug.sh
 ```
 
+## Operations
+```bash
+ kubectl annotate cores.instana.io instana-core -n test-core instana.io/action=continue
+```
+Removes the resource when a simple delete hangs due to ownership.
+```bash
+delete
+```
+Restarts a pausing/failing FSM and continues at the current state
+```bash
+continue
+```
+Triggers the verify fsm.
+```bash
+verify
+```
+Terminates the current FSM in the next reconsile loop and restarts it in the start state.
+```bash
+reset
+```
+Imports the license from the secrets to the instana unit.
+```bash
+license
+```
+
+
 ## FAQ
 
 - I see "ImagePullBackOff" failures when creating a core/unit: You are most likely missing the secrets to pull from our
