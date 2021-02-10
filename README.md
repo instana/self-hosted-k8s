@@ -535,7 +535,7 @@ reset
 ```
 Imports the license from the secrets to the instana unit.
 ```bash
-license
+kubectl instana unit action update_license <unit>-<tenant>
 ```
 
 
