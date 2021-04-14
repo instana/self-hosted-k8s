@@ -1,3 +1,7 @@
+
+**THIS REPOSITORY IS DEPRECATED, THE APPROACH OUTLINED IN HERE IS NO LONGER SUPPORTED**
+**PLEASE CHECK OUR [OFFICIAL DOCS](https://www.instana.com/docs/self_hosted_instana_k8s/installation) FOR RUNNING INSTANA IN K8S**
+
 # The Operator
 
 **This is the documentation for the instana-operator-preview.**
